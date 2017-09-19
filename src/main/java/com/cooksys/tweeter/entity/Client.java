@@ -1,8 +1,15 @@
 package com.cooksys.tweeter.entity;
 
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import com.cooksys.tweeter.embedded.Credentials;
+import com.cooksys.tweeter.embedded.Profile;
 
 @Entity
 public class Client {
@@ -11,16 +18,42 @@ public class Client {
 	@GeneratedValue
 	private Integer id;
 	
+	@Column(nullable = false)
 	private String userName;
+	
+	@Column(nullable = false)
+	private boolean deleted;
+	
+	@Column(nullable = false)
+	private Timestamp joined;
+
+	@Embedded
+	private Credentials credentials;
+	
+	@Embedded
+	private Profile profile;
 
 	
 	public Client() {
 		super();
 	}
 	
-	public Client(String userName) {
+	public Client(Credentials credentials, Profile profile) {
 		super();
-		this.userName = userName;
+		this.userName = credentials.getUserName();
+		this.deleted = false;
+		this.credentials = credentials;
+		this.profile = profile;
+		this.joined = new Timestamp(System.currentTimeMillis());
+	}
+
+	public Client(boolean deleted, Credentials credentials, Profile profile) {
+		super();
+		this.userName = credentials.getUserName();
+		this.deleted = deleted;
+		this.credentials = credentials;
+		this.profile = profile;
+		this.joined = new Timestamp(System.currentTimeMillis());
 	}
 
 	public Integer getId() {
@@ -37,6 +70,14 @@ public class Client {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	@Override

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cooksys.tweeter.embedded.Credentials;
+import com.cooksys.tweeter.embedded.Profile;
 import com.cooksys.tweeter.service.ClientService;
 import com.cooksys.tweeter.service.HashtagService;
 
@@ -17,6 +19,8 @@ public class ValidateController {
 	
 	private HashtagService hashtagService;
 	private ClientService clientService;
+	
+	private final boolean INACTIVE = true;
 	
 	public ValidateController(HashtagService hashtagService, ClientService clientService){
 		this.hashtagService = hashtagService;
@@ -32,12 +36,67 @@ public class ValidateController {
 		hashtagService.create("door");
 		completeMessage += "Tag setup completed\n";
 		
-		clientService.create("mboren");
-		clientService.create("cshivers");
-		clientService.create("ghill");
-		clientService.create("csoden");
-		clientService.create("tpettrey");
-		clientService.create("nhudson");
+		Credentials c1, c2, c3, c4, c5, c6;
+		Profile p1, p2, p3, p4, p5, p6;
+		
+		c1 = new Credentials();
+		c2 = new Credentials();
+		c3 = new Credentials();
+		c4 = new Credentials();
+		c5 = new Credentials();
+		c6 = new Credentials();
+		c1.setUserName("mboren"); 	
+		c1.setPassword("password1");
+		c2.setUserName("csoden"); 	
+		c2.setPassword("password2");
+		c3.setUserName("ghill"); 	
+		c3.setPassword("password3");
+		c4.setUserName("tpettrey");	
+		c4.setPassword("password4");
+		c5.setUserName("nhudson"); 	
+		c5.setPassword("password5");
+		c6.setUserName("cshivers"); 
+		c6.setPassword("password6");
+		
+		p1 = new Profile();
+		p2 = new Profile();
+		p3 = new Profile();
+		p4 = new Profile();
+		p5 = new Profile();
+		p6 = new Profile();
+		
+		p1.setEmail("mboren@gmail.com"); 	
+		p1.setFirstName("Michael");
+		p1.setLastName("Boren"); 			
+		p1.setPhone("1234567890");
+		p2.setEmail("csoden@gmail.com"); 	
+		p2.setFirstName("Christopher");
+		p2.setLastName("Soden"); 			
+		p2.setPhone("8529631740");
+		p3.setEmail("ghill@gmail.com"); 	
+		p3.setFirstName("Greg");
+		p3.setLastName("Hill"); 			
+		p3.setPhone("7418529630");
+		p4.setEmail("tpettrey@gmail.com"); 	
+		p4.setFirstName("Travis");
+		p4.setLastName("Pettrey"); 			
+		p4.setPhone("6894571230");
+		p5.setEmail("cshivers@gmail.com"); 	
+		p5.setFirstName("Chris");
+		p5.setLastName("Shivers"); 			
+		p5.setPhone("4561237890");
+		p6.setEmail("nhudson@gmail.com"); 	
+		p6.setFirstName("Nick");
+		p6.setLastName("Hudson"); 			
+		p6.setPhone("2135468790");
+		
+		
+		clientService.create(c1, p1);
+		clientService.create(c2, p2);
+		clientService.create(c3, p3);
+		clientService.create(INACTIVE, c4, p4);
+		clientService.create(INACTIVE, c5, p5);
+		clientService.create(INACTIVE, c6, p6);
 		completeMessage += "Client setup completed\n";
 		
 		return completeMessage;
@@ -72,6 +131,4 @@ public class ValidateController {
 		response.setStatus(HttpServletResponse.SC_FOUND);
 		return false;
 	}
-	
-
 }
