@@ -1,15 +1,12 @@
 package com.cooksys.tweeter.entity;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import com.cooksys.tweeter.embedded.Credentials;
@@ -35,11 +32,11 @@ public class Client {
 	private Credentials credentials;
 	
 	@ManyToMany
-	private List<Client> followers;
+	private Set<Client> followers;
 	
 	@ManyToMany(mappedBy="followers")
 //	@JoinTable(name="follower_following", joinColumns=@JoinColumn(name="following_id"), inverseJoinColumns=@JoinColumn(name="follower_id"))
-	private List<Client> following;
+	private Set<Client> following;
 	
 	public Client() {
 		super();
@@ -111,19 +108,19 @@ public class Client {
 		this.profile = profile;
 	}
 	
-	public List<Client> getFollowers() {
+	public Set<Client> getFollowers() {
 		return followers;
 	}
 
-	public void setFollowers(List<Client> followers) {
+	public void setFollowers(Set<Client> followers) {
 		this.followers = followers;
 	}
 
-	public List<Client> getFollowing() {
+	public Set<Client> getFollowing() {
 		return following;
 	}
 
-	public void setFollowing(List<Client> following) {
+	public void setFollowing(Set<Client> following) {
 		this.following = following;
 	}
 

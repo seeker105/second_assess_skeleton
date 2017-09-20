@@ -1,6 +1,7 @@
 package com.cooksys.tweeter.mapper;
 
 import java.util.List;
+import java.util.Set;
 
 import org.mapstruct.Mapper;
 
@@ -14,5 +15,5 @@ public interface ClientMapper {
 	
 	Client fromDto(ClientDto clientDto);
 	
-	List<ClientDto> toDtos(List<Client> clients);
+	Set<ClientDto> toDtos(Set<Client> set);
 }

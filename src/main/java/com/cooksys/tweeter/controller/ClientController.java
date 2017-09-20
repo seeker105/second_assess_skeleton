@@ -1,6 +1,6 @@
 package com.cooksys.tweeter.controller;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,7 +30,7 @@ public class ClientController {
 	}
 	
 	@GetMapping
-	public List<ClientDto> getClients(){
+	public Set<ClientDto> getClients(){
 		return clientService.findClients();
 	}
 	
@@ -89,7 +89,7 @@ public class ClientController {
 	}
 	
 	@GetMapping("/@{userName}/followers")
-	public List<ClientDto> getFollowers(@RequestParam String userName, HttpServletResponse response){
+	public Set<ClientDto> getFollowers(@RequestParam String userName, HttpServletResponse response){
 		if (!clientService.userNameExists(userName)){
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
@@ -98,7 +98,7 @@ public class ClientController {
 	}
 	
 	@GetMapping("/@{userName}/following")
-	public List<ClientDto> getFollowing(@RequestParam String userName, HttpServletResponse response){
+	public Set<ClientDto> getFollowing(@RequestParam String userName, HttpServletResponse response){
 		if (!clientService.userNameExists(userName)){
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;

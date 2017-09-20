@@ -1,6 +1,6 @@
 package com.cooksys.tweeter.service;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +48,7 @@ public class ClientService {
 		return clientMapper.toDto(clientRepository.save(client));
 	}
 
-	public List<ClientDto> findClients() {
+	public Set<ClientDto> findClients() {
 		return clientMapper.toDtos(clientRepository.findByDeleted(false));
 	}
 	
@@ -93,18 +93,18 @@ public class ClientService {
 	}
 
 	@Transactional
-	public void follow(String followed, String following) {
+	public void follow(String followed, String follower) {
 		Client followedClient = clientRepository.findByUserName(followed);
-		Client followingClient = clientRepository.findByUserName(following);
-		followedClient.getFollowers().add(followingClient);
+		Client followerClient = clientRepository.findByUserName(follower);
+		followedClient.getFollowers().add(followerClient);
 	}
 
-	public List<ClientDto> getFollowers(String userName) {
+	public Set<ClientDto> getFollowers(String userName) {
 		Client client = clientRepository.findByUserName(userName);
 		return clientMapper.toDtos(clientRepository.findByFollowersAndDeleted(client, false));
 	}
 	
-	public List<ClientDto> getFollowing(String userName) {
+	public Set<ClientDto> getFollowing(String userName) {
 		Client client = clientRepository.findByUserName(userName);
 		return clientMapper.toDtos(clientRepository.findByFollowingAndDeleted(client, false));
 	}
