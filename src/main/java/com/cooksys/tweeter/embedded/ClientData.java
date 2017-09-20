@@ -32,6 +32,10 @@ public class ClientData {
 		return credentials.getUserLogin();
 	}
 	
+	public String getPassword(){
+		return credentials.getPassword();
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

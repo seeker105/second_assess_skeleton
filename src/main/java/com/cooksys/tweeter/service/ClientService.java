@@ -65,5 +65,19 @@ public class ClientService {
 	public boolean clientIsDeleted(String userName){
 		return findByUserName(userName).isDeleted();
 	}
+
+	public ClientDto updateClient(ClientData clientData) {
+		Client client = clientRepository.findByUserName(clientData.getUserName());
+		client.setProfile(clientData.getProfile());
+		clientRepository.saveAndFlush(client);
+		return clientMapper.toDto(client);
+	}
+
+	public boolean validatePassword(ClientData clientData) {
+
+		Client client = clientRepository.findByUserName(clientData.getUserName());
+		System.out.println("\n\n\n\n\nclient = " + client + "\n\n\n\n\n");
+		return clientData.getPassword().equals(client.getCredentials().getPassword());
+	}
 	
 }

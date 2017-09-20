@@ -62,7 +62,6 @@ public class ClientDto {
 		this.userName = userName;
 	}
 
-	
 	public boolean isDeleted() {
 		return deleted;
 	}
