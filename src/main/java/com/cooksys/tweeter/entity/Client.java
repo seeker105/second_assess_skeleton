@@ -133,7 +133,8 @@ public class Client {
 
 	@Override
 	public String toString() {
-		return "Client [id=" + id + ", userName=" + userName + "]";
+		return "Client [id=" + id + ", userName=" + userName + ", deleted=" + deleted + ", joined=" + joined
+				+ ", profile=" + profile + ", credentials=" + credentials + "]";
 	}
 	
 	

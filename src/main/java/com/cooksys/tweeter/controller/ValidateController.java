@@ -114,6 +114,8 @@ public class ValidateController {
 	
 	@GetMapping("/username/exists/@{userName}")
 	public boolean userNameExists(@RequestParam String userName, HttpServletResponse response){
+		System.out.println("\n\n\n\n userName found by userName= " + userName + "\n\n\n\n\n");
+
 		if (clientService.userNameExists(userName)){
 			response.setStatus(HttpServletResponse.SC_FOUND);
 			return true;

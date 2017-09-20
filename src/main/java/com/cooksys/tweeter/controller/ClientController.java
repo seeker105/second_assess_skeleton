@@ -6,12 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.tweeter.dto.ClientDto;
-import com.cooksys.tweeter.embedded.Credentials;
-import com.cooksys.tweeter.embedded.Profile;
+import com.cooksys.tweeter.embedded.ClientData;
 import com.cooksys.tweeter.service.ClientService;
 
 @RestController
@@ -31,13 +31,13 @@ public class ClientController {
 	}
 	
 	@PostMapping
-	public ClientDto createClient(Credentials credentials, Profile profile, HttpServletResponse response){
-		if (clientService.userNameExists(credentials.getUserLogin())){
+	public ClientDto createClient(@RequestBody ClientData clientData, HttpServletResponse response){
+		System.out.println("\n\n\n\n\nprofile = " + clientData + "\n\n\n\n\n");
+		if (clientService.userNameExists(clientData.getUserName())){
 			response.setStatus(HttpServletResponse.SC_CONFLICT);
 			return null;
 		}
-		clientService.create(credentials, profile);
-		return null;
+		return clientService.create(clientData);
 	}
 	
 	

@@ -8,7 +8,7 @@ import com.cooksys.tweeter.entity.Client;
 
 public interface ClientRepository extends JpaRepository<Client, Integer> {
 
-	List<Client> findByUserName(String userName);
+	Client findByUserName(String userName);
 
 	List<Client> findByDeleted(boolean deleted);
 

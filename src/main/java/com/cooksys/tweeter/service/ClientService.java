@@ -25,12 +25,14 @@ public class ClientService {
 	}
 
 	public boolean userNameExists(String userName) {
-		List<Client> clients = clientRepository.findByUserName(userName);
-		System.out.println(clients);
-		return clients.size() > 0;
+		Client client = clientRepository.findByUserName(userName);
+		System.out.println("\n\n\n\n Client found by userName= " + client + "\n\n\n\n\n");
+		return client != null;
 	}
 
 	public ClientDto create(Credentials credentials, Profile profile) {
+		System.out.println("\n\n\n\n---\n" + credentials + "\n" + profile + "\n---\n");
+
 		Client client = new Client(credentials, profile);
 		return clientMapper.toDto(clientRepository.save(client));
 	}
@@ -48,6 +50,10 @@ public class ClientService {
 	public List<ClientDto> findClients() {
 		return clientMapper.toDtos(clientRepository.findByDeleted(false));
 	}
+	
+//	public boolean clientDeleted(ClientData clientData){
+//		
+//	}
 	
 	
 }
