@@ -5,14 +5,14 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Credentials {
 	
-	private String userName;
+	private String userLogin;
 	private String password;
 	
-	public String getUserName() {
-		return userName;
+	public String getUserLogin() {
+		return userLogin;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUserLogin(String userLogin) {
+		this.userLogin = userLogin;
 	}
 	public String getPassword() {
 		return password;
@@ -25,7 +25,7 @@ public class Credentials {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		result = prime * result + ((userLogin == null) ? 0 : userLogin.hashCode());
 		return result;
 	}
 	@Override
@@ -47,20 +47,20 @@ public class Credentials {
 		} else if (!password.equals(other.password)) {
 			return false;
 		}
-		if (userName == null) {
-			if (other.userName != null) {
+		if (userLogin == null) {
+			if (other.userLogin != null) {
 				return false;
 			}
-		} else if (!userName.equals(other.userName)) {
+		} else if (!userLogin.equals(other.userLogin)) {
 			return false;
 		}
 		return true;
 	}
-	
 	@Override
 	public String toString() {
-		return "Credentials [userName=" + userName + ", password=" + password + "]";
+		return "Credentials [userLogin=" + userLogin + ", password=" + password + "]";
 	}
+	
 	
 	
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.tweeter.dto.ClientDto;
+import com.cooksys.tweeter.embedded.ClientData;
 import com.cooksys.tweeter.embedded.Credentials;
 import com.cooksys.tweeter.embedded.Profile;
 import com.cooksys.tweeter.entity.Client;
@@ -36,6 +37,11 @@ public class ClientService {
 	
 	public ClientDto create(boolean deleted, Credentials credentials, Profile profile) {
 		Client client = new Client(deleted, credentials, profile);
+		return clientMapper.toDto(clientRepository.save(client));
+	}
+	
+	public ClientDto create(ClientData clientData){
+		Client client = new Client(clientData.getCredentials(), clientData.getProfile());
 		return clientMapper.toDto(clientRepository.save(client));
 	}
 

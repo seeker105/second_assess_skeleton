@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.tweeter.dto.ClientDto;
@@ -32,12 +31,12 @@ public class ClientController {
 	}
 	
 	@PostMapping
-	public ClientDto createClient(@RequestParam Credentials credentials, Profile profile, HttpServletResponse response){
-		if (clientService.userNameExists(credentials.getUserName())){
-			response.setStatus(HttpServletResponse.SC_CONFLICT);
-			return null;
-		}
-		clientService.create(credentials, profile);
+	public ClientDto createClient(Credentials credentials, Profile profile, HttpServletResponse response){
+//		if (clientService.userNameExists(clientData.getUserName())){
+//			response.setStatus(HttpServletResponse.SC_CONFLICT);
+//			return null;
+//		}
+//		clientService.create(clientData);
 		return null;
 	}
 	

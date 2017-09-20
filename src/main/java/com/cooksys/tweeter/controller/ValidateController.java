@@ -45,17 +45,17 @@ public class ValidateController {
 		c4 = new Credentials();
 		c5 = new Credentials();
 		c6 = new Credentials();
-		c1.setUserName("mboren"); 	
+		c1.setUserLogin("mboren"); 	
 		c1.setPassword("password1");
-		c2.setUserName("csoden"); 	
+		c2.setUserLogin("csoden"); 	
 		c2.setPassword("password2");
-		c3.setUserName("ghill"); 	
+		c3.setUserLogin("ghill"); 	
 		c3.setPassword("password3");
-		c4.setUserName("tpettrey");	
+		c4.setUserLogin("tpettrey");	
 		c4.setPassword("password4");
-		c5.setUserName("nhudson"); 	
+		c5.setUserLogin("nhudson"); 	
 		c5.setPassword("password5");
-		c6.setUserName("cshivers"); 
+		c6.setUserLogin("cshivers"); 
 		c6.setPassword("password6");
 		
 		p1 = new Profile();

@@ -12,6 +12,4 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
 
 	List<Client> findByDeleted(boolean deleted);
 
-	
-	
 }

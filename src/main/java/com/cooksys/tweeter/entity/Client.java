@@ -2,7 +2,6 @@ package com.cooksys.tweeter.entity;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,13 +17,10 @@ public class Client {
 	@GeneratedValue
 	private Integer id;
 	
-	@Column(nullable = false)
 	private String userName;
 	
-	@Column(nullable = false)
 	private boolean deleted;
 	
-	@Column(nullable = false)
 	private Timestamp joined;
 
 	@Embedded
@@ -40,7 +36,7 @@ public class Client {
 	
 	public Client(Credentials credentials, Profile profile) {
 		super();
-		this.userName = credentials.getUserName();
+		this.userName = credentials.getUserLogin();
 		this.deleted = false;
 		this.credentials = credentials;
 		this.profile = profile;
@@ -49,7 +45,7 @@ public class Client {
 
 	public Client(boolean deleted, Credentials credentials, Profile profile) {
 		super();
-		this.userName = credentials.getUserName();
+		this.userName = credentials.getUserLogin();
 		this.deleted = deleted;
 		this.credentials = credentials;
 		this.profile = profile;
@@ -78,6 +74,30 @@ public class Client {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public Timestamp getJoined() {
+		return joined;
+	}
+
+	public void setJoined(Timestamp joined) {
+		this.joined = joined;
+	}
+
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+	}
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 
 	@Override
