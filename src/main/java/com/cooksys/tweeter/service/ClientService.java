@@ -108,5 +108,12 @@ public class ClientService {
 		Client client = clientRepository.findByUserName(userName);
 		return clientMapper.toDtos(clientRepository.findByFollowingAndDeleted(client, false));
 	}
+
+	@Transactional
+	public void unFollow(String followed, String follower) {
+		Client followedClient = clientRepository.findByUserName(followed);
+		Client followerClient = clientRepository.findByUserName(follower);
+		followedClient.getFollowers().remove(followerClient);
+	}
 	
 }

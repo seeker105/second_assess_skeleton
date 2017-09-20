@@ -106,6 +106,16 @@ public class ClientController {
 		return clientService.getFollowing(userName);
 	}
 	
+	@PostMapping("@{username}/unfollow")
+	public void unFollowClient(@RequestParam String username, @RequestBody Credentials followerCred, HttpServletResponse response){
+		if (!validClient(followerCred) || !validClient(username)){
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+		clientService.unFollow(followerCred.getUserLogin(), username);
+	}
+
+	
 	private boolean validClient(ClientData clientData){
 		String userName = clientData.getUserName();
 		if (!clientService.userNameExists(userName) || clientService.clientIsDeleted(userName))
