@@ -1,6 +1,7 @@
 package com.cooksys.tweeter.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Embedded;
 
@@ -19,6 +20,7 @@ public class ClientDto {
 	@Embedded
 	private Profile profile;
 	private Timestamp joined;
+	
 	
 	
 	public ClientDto() {

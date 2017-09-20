@@ -3,6 +3,7 @@ package com.cooksys.tweeter.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cooksys.tweeter.dto.ClientDto;
 import com.cooksys.tweeter.embedded.ClientData;
@@ -74,7 +75,6 @@ public class ClientService {
 	}
 
 	public boolean validatePassword(ClientData clientData) {
-
 		Client client = clientRepository.findByUserName(clientData.getUserName());
 		System.out.println("\n\n\n\n\nclient = " + client + "\n\n\n\n\n");
 		return clientData.getPassword().equals(client.getCredentials().getPassword());
@@ -90,6 +90,23 @@ public class ClientService {
 		client.setDeleted(true);
 		clientRepository.saveAndFlush(client);
 		return clientMapper.toDto(client);
+	}
+
+	@Transactional
+	public void follow(String followed, String following) {
+		Client followedClient = clientRepository.findByUserName(followed);
+		Client followingClient = clientRepository.findByUserName(following);
+		followedClient.getFollowers().add(followingClient);
+	}
+
+	public List<ClientDto> getFollowers(String userName) {
+		Client client = clientRepository.findByUserName(userName);
+		return clientMapper.toDtos(clientRepository.findByFollowersAndDeleted(client, false));
+	}
+	
+	public List<ClientDto> getFollowing(String userName) {
+		Client client = clientRepository.findByUserName(userName);
+		return clientMapper.toDtos(clientRepository.findByFollowingAndDeleted(client, false));
 	}
 	
 }

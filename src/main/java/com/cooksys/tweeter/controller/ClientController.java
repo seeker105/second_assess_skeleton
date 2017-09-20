@@ -79,11 +79,37 @@ public class ClientController {
 		return clientService.deleteClient(credentials.getUserLogin());
 	}
 	
+	@PostMapping("/@{userName}/follow")
+	public void followClient(@RequestParam String userName, @RequestBody Credentials followerCred, HttpServletResponse response){
+		if (!validClient(followerCred) || !validClient(userName)){
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+		clientService.follow(followerCred.getUserLogin(), userName);
+	}
+	
+	@GetMapping("/@{userName}/followers")
+	public List<ClientDto> getFollowers(@RequestParam String userName, HttpServletResponse response){
+		if (!clientService.userNameExists(userName)){
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+		return clientService.getFollowers(userName);
+	}
+	
+	@GetMapping("/@{userName}/following")
+	public List<ClientDto> getFollowing(@RequestParam String userName, HttpServletResponse response){
+		if (!clientService.userNameExists(userName)){
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+		return clientService.getFollowing(userName);
+	}
+	
 	private boolean validClient(ClientData clientData){
 		String userName = clientData.getUserName();
 		if (!clientService.userNameExists(userName) || clientService.clientIsDeleted(userName))
 			return false;
-//		System.out.println("\n\n\n\n\nclientService.validatePassword(clientData) = " + clientService.validatePassword(clientData) + "\n\n\n\n\n");
 		return clientService.validatePassword(clientData);
 	}
 	
@@ -91,8 +117,13 @@ public class ClientController {
 		String userName = credentials.getUserLogin();
 		if (!clientService.userNameExists(userName) || clientService.clientIsDeleted(userName))
 			return false;
-//		System.out.println("\n\n\n\n\nclientService.validatePassword(clientData) = " + clientService.validatePassword(clientData) + "\n\n\n\n\n");
 		return clientService.validatePassword(credentials);
+	}
+	
+	private boolean validClient(String userName){
+		if (!clientService.userNameExists(userName) || clientService.clientIsDeleted(userName))
+			return false;
+		return true;
 	}
 	
 	

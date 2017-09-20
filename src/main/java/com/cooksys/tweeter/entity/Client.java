@@ -1,11 +1,16 @@
 package com.cooksys.tweeter.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import com.cooksys.tweeter.embedded.Credentials;
 import com.cooksys.tweeter.embedded.Profile;
@@ -29,7 +34,12 @@ public class Client {
 	@Embedded
 	private Credentials credentials;
 	
-
+	@ManyToMany
+	private List<Client> followers;
+	
+	@ManyToMany(mappedBy="followers")
+//	@JoinTable(name="follower_following", joinColumns=@JoinColumn(name="following_id"), inverseJoinColumns=@JoinColumn(name="follower_id"))
+	private List<Client> following;
 	
 	public Client() {
 		super();
@@ -100,6 +110,22 @@ public class Client {
 	public void setProfile(Profile profile) {
 		this.profile = profile;
 	}
+	
+	public List<Client> getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(List<Client> followers) {
+		this.followers = followers;
+	}
+
+	public List<Client> getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(List<Client> following) {
+		this.following = following;
+	}
 
 	@Override
 	public int hashCode() {
@@ -134,7 +160,8 @@ public class Client {
 	@Override
 	public String toString() {
 		return "Client [id=" + id + ", userName=" + userName + ", deleted=" + deleted + ", joined=" + joined
-				+ ", profile=" + profile + ", credentials=" + credentials + "]";
+				+ ", profile=" + profile + ", credentials=" + credentials + ", followers=" + followers + ", following="
+				+ following + "]";
 	}
 	
 	
