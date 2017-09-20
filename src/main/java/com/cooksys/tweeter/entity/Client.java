@@ -24,10 +24,11 @@ public class Client {
 	private Timestamp joined;
 
 	@Embedded
+	private Profile profile;
+
+	@Embedded
 	private Credentials credentials;
 	
-	@Embedded
-	private Profile profile;
 
 	
 	public Client() {

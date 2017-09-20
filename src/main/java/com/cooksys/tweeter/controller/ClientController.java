@@ -32,11 +32,11 @@ public class ClientController {
 	
 	@PostMapping
 	public ClientDto createClient(Credentials credentials, Profile profile, HttpServletResponse response){
-//		if (clientService.userNameExists(clientData.getUserName())){
-//			response.setStatus(HttpServletResponse.SC_CONFLICT);
-//			return null;
-//		}
-//		clientService.create(clientData);
+		if (clientService.userNameExists(credentials.getUserLogin())){
+			response.setStatus(HttpServletResponse.SC_CONFLICT);
+			return null;
+		}
+		clientService.create(credentials, profile);
 		return null;
 	}
 	
