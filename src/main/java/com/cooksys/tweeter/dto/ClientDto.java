@@ -11,6 +11,7 @@ public class ClientDto {
 	
 	private Integer id;
 	private String userName;
+	private boolean deleted;
 	
 	@Embedded
 	private Credentials credentials;
@@ -60,6 +61,17 @@ public class ClientDto {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 
 	@Override
 	public int hashCode() {

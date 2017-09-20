@@ -51,24 +51,19 @@ public class ClientService {
 		return clientMapper.toDtos(clientRepository.findByDeleted(false));
 	}
 	
-	public Client findByUserName(String userName){
-		return clientRepository.findByUserName(userName);
+	public ClientDto findByUserName(String userName){
+		return clientMapper.toDto(clientRepository.findByUserName(userName));
 	}
 
-	public ClientDto activateClient(Client client) {
-		client = clientRepository.findByUserName(client.getUserName());
+	public ClientDto activateClient(ClientDto clientDto) {
+		Client client = clientRepository.findByUserName(clientDto.getUserName());
 		client.setDeleted(false);
 		clientRepository.saveAndFlush(client);
 		return clientMapper.toDto(client);
 	}
-
-
-
-
 	
-//	public boolean clientDeleted(ClientData clientData){
-//		
-//	}
-	
+	public boolean clientIsDeleted(String userName){
+		return findByUserName(userName).isDeleted();
+	}
 	
 }
