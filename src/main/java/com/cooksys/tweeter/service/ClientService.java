@@ -26,12 +26,12 @@ public class ClientService {
 
 	public boolean userNameExists(String userName) {
 		Client client = clientRepository.findByUserName(userName);
-		System.out.println("\n\n\n\n Client found by userName= " + client + "\n\n\n\n\n");
+//		System.out.println("\n\n\n\n Client found by userName= " + client + "\n\n\n\n\n");
 		return client != null;
 	}
 
 	public ClientDto create(Credentials credentials, Profile profile) {
-		System.out.println("\n\n\n\n---\n" + credentials + "\n" + profile + "\n---\n");
+//		System.out.println("\n\n\n\n---\n" + credentials + "\n" + profile + "\n---\n");
 
 		Client client = new Client(credentials, profile);
 		return clientMapper.toDto(clientRepository.save(client));
@@ -50,6 +50,21 @@ public class ClientService {
 	public List<ClientDto> findClients() {
 		return clientMapper.toDtos(clientRepository.findByDeleted(false));
 	}
+	
+	public Client findByUserName(String userName){
+		return clientRepository.findByUserName(userName);
+	}
+
+	public ClientDto activateClient(Client client) {
+		client = clientRepository.findByUserName(client.getUserName());
+		client.setDeleted(false);
+		clientRepository.saveAndFlush(client);
+		return clientMapper.toDto(client);
+	}
+
+
+
+
 	
 //	public boolean clientDeleted(ClientData clientData){
 //		

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.tweeter.dto.ClientDto;
 import com.cooksys.tweeter.embedded.ClientData;
+import com.cooksys.tweeter.entity.Client;
 import com.cooksys.tweeter.service.ClientService;
 
 @RestController
@@ -32,8 +33,12 @@ public class ClientController {
 	
 	@PostMapping
 	public ClientDto createClient(@RequestBody ClientData clientData, HttpServletResponse response){
-		System.out.println("\n\n\n\n\nprofile = " + clientData + "\n\n\n\n\n");
-		if (clientService.userNameExists(clientData.getUserName())){
+		System.out.println("\n\n\n\n\nclientData = " + clientData + "\n\n\n\n\n");
+		Client client = clientService.findByUserName(clientData.getUserName());
+		if (clientService.userNameExists(client.getUserName())){
+			if (client.isDeleted()){
+				return clientService.activateClient(client);
+			}
 			response.setStatus(HttpServletResponse.SC_CONFLICT);
 			return null;
 		}

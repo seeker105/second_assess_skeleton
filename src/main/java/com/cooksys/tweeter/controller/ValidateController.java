@@ -81,14 +81,14 @@ public class ValidateController {
 		p4.setFirstName("Travis");
 		p4.setLastName("Pettrey"); 			
 		p4.setPhone("6894571230");
-		p5.setEmail("cshivers@gmail.com"); 	
-		p5.setFirstName("Chris");
-		p5.setLastName("Shivers"); 			
-		p5.setPhone("4561237890");
-		p6.setEmail("nhudson@gmail.com"); 	
-		p6.setFirstName("Nick");
-		p6.setLastName("Hudson"); 			
-		p6.setPhone("2135468790");
+		p5.setEmail("nhudson@gmail.com"); 	
+		p5.setFirstName("Nick");
+		p5.setLastName("Hudson"); 			
+		p5.setPhone("2135468790");
+		p6.setEmail("cshivers@gmail.com"); 	
+		p6.setFirstName("Chris");
+		p6.setLastName("Shivers"); 			
+		p6.setPhone("4561237890");
 		
 		
 		clientService.create(c1, p1);
