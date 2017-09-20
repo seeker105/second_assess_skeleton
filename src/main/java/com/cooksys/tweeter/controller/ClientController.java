@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.tweeter.dto.ClientDto;
 import com.cooksys.tweeter.embedded.ClientData;
+import com.cooksys.tweeter.embedded.Credentials;
 import com.cooksys.tweeter.service.ClientService;
 
 @RestController
@@ -68,12 +70,29 @@ public class ClientController {
 		return clientService.updateClient(clientData);
 	}
 	
+	@DeleteMapping("/@{userName}")
+	public ClientDto deleteClient(@RequestBody Credentials credentials, HttpServletResponse response){
+		if (!validClient(credentials)){
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+		return clientService.deleteClient(credentials.getUserLogin());
+	}
+	
 	private boolean validClient(ClientData clientData){
 		String userName = clientData.getUserName();
 		if (!clientService.userNameExists(userName) || clientService.clientIsDeleted(userName))
 			return false;
 //		System.out.println("\n\n\n\n\nclientService.validatePassword(clientData) = " + clientService.validatePassword(clientData) + "\n\n\n\n\n");
 		return clientService.validatePassword(clientData);
+	}
+	
+	private boolean validClient(Credentials credentials){
+		String userName = credentials.getUserLogin();
+		if (!clientService.userNameExists(userName) || clientService.clientIsDeleted(userName))
+			return false;
+//		System.out.println("\n\n\n\n\nclientService.validatePassword(clientData) = " + clientService.validatePassword(clientData) + "\n\n\n\n\n");
+		return clientService.validatePassword(credentials);
 	}
 	
 	

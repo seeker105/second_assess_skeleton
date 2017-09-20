@@ -79,5 +79,17 @@ public class ClientService {
 		System.out.println("\n\n\n\n\nclient = " + client + "\n\n\n\n\n");
 		return clientData.getPassword().equals(client.getCredentials().getPassword());
 	}
+
+	public boolean validatePassword(Credentials credentials) {
+		Client client = clientRepository.findByUserName(credentials.getUserLogin());
+		return credentials.getPassword().equals(client.getCredentials().getPassword());
+	}
+
+	public ClientDto deleteClient(String userName) {
+		Client client = clientRepository.findByUserName(userName);
+		client.setDeleted(true);
+		clientRepository.saveAndFlush(client);
+		return clientMapper.toDto(client);
+	}
 	
 }
