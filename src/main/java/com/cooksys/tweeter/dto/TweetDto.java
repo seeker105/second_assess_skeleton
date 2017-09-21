@@ -10,23 +10,9 @@ public class TweetDto {
 	
 	private Integer id;
 	
-	private Client author;
-	
 	private Timestamp posted;
 	
 	private String content;
-	
-	private boolean deleted;
-
-	private Tweet inReplyTo;
-	
-	//private ArrayList<Tweet> replies;
-	
-	private Tweet repostOf;
-	
-	//private ArrayList<Tweet> reposts;
-
-	
 	
 /*	public ArrayList<Tweet> getReplies() {
 		return replies;
@@ -52,14 +38,6 @@ public class TweetDto {
 		this.id = id;
 	}
 
-	public Client getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(Client author) {
-		this.author = author;
-	}
-
 	public Timestamp getPosted() {
 		return posted;
 	}
@@ -74,30 +52,6 @@ public class TweetDto {
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public Tweet getInReplyTo() {
-		return inReplyTo;
-	}
-
-	public void setInReplyTo(Tweet inReplyTo) {
-		this.inReplyTo = inReplyTo;
-	}
-
-	public Tweet getRepostOf() {
-		return repostOf;
-	}
-
-	public void setRepostOf(Tweet repostOf) {
-		this.repostOf = repostOf;
-	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
 	}
 
 	@Override
@@ -132,8 +86,7 @@ public class TweetDto {
 
 	@Override
 	public String toString() {
-		return "TweetDto [id=" + id + ", author=" + author + ", posted=" + posted + ", content=" + content
-				+ ", inReplyTo=" + inReplyTo + ", repostOf=" + repostOf + ", deleted=" + deleted + "]";
+		return "TweetDto [id=" + id + ", posted=" + posted + ", content=" + content + "]";
 	}
 	
 	

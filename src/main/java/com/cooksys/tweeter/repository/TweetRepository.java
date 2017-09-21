@@ -1,5 +1,6 @@
 package com.cooksys.tweeter.repository;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.domain.Sort;
@@ -12,8 +13,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Integer>{
 	Set<Tweet> findByHashtagsOrderByPosted(String hashtagName);
 
 	Tweet findByIdAndDeleted(Integer id, boolean deleted);
-
+	
 	Tweet findById(Integer id);
 
-	
 }

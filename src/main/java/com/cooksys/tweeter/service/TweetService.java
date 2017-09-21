@@ -1,6 +1,7 @@
 package com.cooksys.tweeter.service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -53,7 +54,7 @@ public class TweetService {
 	public TweetDto createSimpleTweet(SimpleTweetData simpleTweetData){
 		Client author= clientRepository.findByUserName(simpleTweetData.getCredentials().getUserLogin());
 		String content = simpleTweetData.getContent();
-		Tweet tweet = new Tweet();
+		Tweet tweet = new Tweet(NOT_DELETED);
 		
 		// Set timestamp
 		tweet.setPosted(new Timestamp(System.currentTimeMillis()));
@@ -61,17 +62,15 @@ public class TweetService {
 		// Set content
 		tweet.setContent(content);
 		
-		// Set deleted
-		tweet.setDeleted(NOT_DELETED);
-		
 		// Process hashtags
-		tweet = processHashtags(tweet, content);
+		processHashtags(tweet, content);
 		
 		// Process mentions
-		tweet = processMentions(tweet, content);
+		processMentions(tweet, content);
 
 		// Set author
-		author.getTweets().add(tweet);
+		tweet.setAuthor(author);
+//		author.getTweets().add(tweet);
 		return tweetMapper.toDto(tweetRepository.save(tweet));
 	}
 
@@ -80,7 +79,15 @@ public class TweetService {
 	}
 
 	public List<TweetDto> getTweets() {
-		return tweetMapper.toDtos(tweetRepository.findAll(new Sort(Sort.Direction.DESC, "posted")));
+		List<Tweet> allTweets = tweetRepository.findAll(new Sort(Sort.Direction.DESC, "posted"));
+		List<Tweet> returnedTweets = new ArrayList<Tweet>();
+		
+		for (Tweet t : allTweets){
+			if (!t.isDeleted())
+				returnedTweets.add(t);
+		}
+		return tweetMapper.toDtos(returnedTweets);
+		
 	}
 
 	public TweetDto getTweetById(Integer id) {
@@ -111,7 +118,7 @@ public class TweetService {
 	public TweetDto replyTo(Integer id, SimpleTweetData tweetData) {
 		Client author= clientRepository.findByUserName(tweetData.getCredentials().getUserLogin());
 		String content = tweetData.getContent();
-		Tweet tweet = new Tweet();
+		Tweet tweet = new Tweet(NOT_DELETED);
 		Tweet inReplyTo = tweetRepository.findById(id);
 		
 		
@@ -120,9 +127,6 @@ public class TweetService {
 		
 		// Set content
 		tweet.setContent(content);
-		
-		// Set deleted
-		tweet.setDeleted(NOT_DELETED);
 		
 		// Process hashtags
 		tweet = processHashtags(tweet, content);
@@ -134,7 +138,8 @@ public class TweetService {
 		tweet.setInReplyTo(inReplyTo);
 
 		// Set author
-		author.getTweets().add(tweet);
+		tweet.setAuthor(author);
+//		author.getTweets().add(tweet);
 		return tweetMapper.toDto(tweetRepository.save(tweet));
 	}
 	
@@ -175,20 +180,18 @@ public class TweetService {
 	@Transactional
 	public TweetDto repost(Integer id, String userName) {
 		Client author = clientRepository.findByUserName(userName);
-		Tweet tweet = new Tweet();
+		Tweet tweet = new Tweet(NOT_DELETED);
 		Tweet repostOf = tweetRepository.findById(id);
 		
 		// Set timestamp
 		tweet.setPosted(new Timestamp(System.currentTimeMillis()));
 		
-		// Set deleted
-		tweet.setDeleted(NOT_DELETED);
-		
 		// Set repostOf
 		tweet.setRepostOf(repostOf);
 
 		// Set author
-		author.getTweets().add(tweet);
+		tweet.setAuthor(author);
+//		author.getTweets().add(tweet);
 		return tweetMapper.toDto(tweetRepository.save(tweet));
 	}
 	

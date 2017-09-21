@@ -1,6 +1,8 @@
 package com.cooksys.tweeter.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -48,6 +50,20 @@ public class Tweet {
 	@OneToMany(mappedBy="repostOf")
 	private List<Tweet> reposts;
 	
+	public Tweet() {
+		super();
+	}
+
+	public Tweet(boolean deleted) {
+		super();
+		this.deleted = deleted;
+		this.hashtags = new HashSet<Hashtag>();
+		this.mentionedBy = new HashSet<Client>();
+		this.likedBy = new HashSet<Client>();
+		this.replies = new ArrayList<Tweet>();
+		this.reposts = new ArrayList<Tweet>();
+	}
+
 	public List<Tweet> getReplies() {
 		return replies;
 	}
@@ -78,10 +94,6 @@ public class Tweet {
 	
 	public void setInReplyTo(Tweet inReplyTo) {
 		this.inReplyTo = inReplyTo;
-	}
-
-	public Tweet() {
-		super();
 	}
 
 	public Integer getId() {
@@ -136,8 +148,8 @@ public class Tweet {
 		return mentionedBy;
 	}
 
-	public void setMentionedBy(Set<Client> mentions) {
-		this.mentionedBy = mentions;
+	public void setMentionedBy(Set<Client> mentionedBy) {
+		this.mentionedBy = mentionedBy;
 	}
 
 	public Set<Client> getLikedBy() {
