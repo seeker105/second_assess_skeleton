@@ -1,7 +1,6 @@
 package com.cooksys.tweeter.dto;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import javax.persistence.Embedded;
 
@@ -20,13 +19,6 @@ public class ClientDto {
 	@Embedded
 	private Profile profile;
 	private Timestamp joined;
-	
-	
-	
-	public ClientDto() {
-		super();
-	}
-
 	
 	public Profile getProfile() {
 		return profile;
@@ -71,6 +63,15 @@ public class ClientDto {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
 	}
 
 

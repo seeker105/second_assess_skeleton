@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.tweeter.dto.TweetDto;
+import com.cooksys.tweeter.embedded.Credentials;
 import com.cooksys.tweeter.embedded.SimpleTweetData;
 import com.cooksys.tweeter.mapper.TweetMapper;
 import com.cooksys.tweeter.repository.ClientRepository;
@@ -79,5 +80,13 @@ public class TweetController {
 		return tweetDto;
 	}
 	
+	@PostMapping("/{id}/like")
+	public void like(@RequestParam Integer id, @RequestBody Credentials credentials, HttpServletResponse response){
+		if (!clientController.validClient(credentials) || !tweetService.tweetExists(id)){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+		tweetService.like(id, credentials.getUserLogin());
+	}
 	
 }

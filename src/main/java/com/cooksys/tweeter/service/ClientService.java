@@ -31,18 +31,20 @@ public class ClientService {
 		return client != null;
 	}
 
+	@Transactional
 	public ClientDto create(Credentials credentials, Profile profile) {
 //		System.out.println("\n\n\n\n---\n" + credentials + "\n" + profile + "\n---\n");
-
 		Client client = new Client(credentials, profile);
 		return clientMapper.toDto(clientRepository.save(client));
 	}
 	
+	@Transactional
 	public ClientDto create(boolean deleted, Credentials credentials, Profile profile) {
 		Client client = new Client(deleted, credentials, profile);
 		return clientMapper.toDto(clientRepository.save(client));
 	}
 	
+	@Transactional
 	public ClientDto create(ClientData clientData){
 		Client client = new Client(clientData.getCredentials(), clientData.getProfile());
 		return clientMapper.toDto(clientRepository.save(client));
@@ -56,6 +58,7 @@ public class ClientService {
 		return clientMapper.toDto(clientRepository.findByUserName(userName));
 	}
 
+	@Transactional
 	public ClientDto activateClient(ClientDto clientDto) {
 		Client client = clientRepository.findByUserName(clientDto.getUserName());
 		client.setDeleted(false);
@@ -66,7 +69,8 @@ public class ClientService {
 	public boolean clientIsDeleted(String userName){
 		return findByUserName(userName).isDeleted();
 	}
-
+	
+	@Transactional
 	public ClientDto updateClient(ClientData clientData) {
 		Client client = clientRepository.findByUserName(clientData.getUserName());
 		client.setProfile(clientData.getProfile());
@@ -85,6 +89,7 @@ public class ClientService {
 		return credentials.getPassword().equals(client.getCredentials().getPassword());
 	}
 
+	@Transactional
 	public ClientDto deleteClient(String userName) {
 		Client client = clientRepository.findByUserName(userName);
 		client.setDeleted(true);

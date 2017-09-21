@@ -25,6 +25,17 @@ public class Tweet {
 	
 	private String content;
 	
+	private boolean deleted;
+	
+	@OneToMany(mappedBy="tweets")
+	private Set<Hashtag> hashtags;
+	
+	@ManyToMany(mappedBy="mentions")
+	private Set<Client> mentions;
+	
+	@ManyToMany(mappedBy="likes")
+	private Set<Client> likedBy;
+
 	@ManyToOne
 	private Tweet inReplyTo;
 	
@@ -37,16 +48,37 @@ public class Tweet {
 	@OneToMany(mappedBy="repostOf")
 	private ArrayList<Tweet> reposts;
 	
-	private boolean deleted;
+	public ArrayList<Tweet> getReplies() {
+		return replies;
+	}
+
+	public void setReplies(ArrayList<Tweet> replies) {
+		this.replies = replies;
+	}
+
+	public Tweet getRepostOf() {
+		return repostOf;
+	}
+
+	public void setRepostOf(Tweet repostOf) {
+		this.repostOf = repostOf;
+	}
+
+	public ArrayList<Tweet> getReposts() {
+		return reposts;
+	}
+
+	public void setReposts(ArrayList<Tweet> reposts) {
+		this.reposts = reposts;
+	}
 	
-	@OneToMany(mappedBy="tweets")
-	private Set<Hashtag> hashtags;
+	public Tweet getInReplyTo() {
+		return inReplyTo;
+	}
 	
-	@ManyToMany(mappedBy="mentions")
-	private Set<Client> mentions;
-	
-	@ManyToMany(mappedBy="likes")
-	private Set<Client> likedBy;
+	public void setInReplyTo(Tweet inReplyTo) {
+		this.inReplyTo = inReplyTo;
+	}
 
 	public Tweet() {
 		super();
@@ -84,14 +116,6 @@ public class Tweet {
 		this.content = content;
 	}
 
-	public Tweet getInReplyTo() {
-		return inReplyTo;
-	}
-
-	public void setInReplyTo(Tweet inReplyTo) {
-		this.inReplyTo = inReplyTo;
-	}
-
 	public boolean isDeleted() {
 		return deleted;
 	}
@@ -114,30 +138,6 @@ public class Tweet {
 
 	public void setMentions(Set<Client> mentions) {
 		this.mentions = mentions;
-	}
-	
-	public ArrayList<Tweet> getReplies() {
-		return replies;
-	}
-
-	public void setReplies(ArrayList<Tweet> replies) {
-		this.replies = replies;
-	}
-
-	public Tweet getRepostOf() {
-		return repostOf;
-	}
-
-	public void setRepostOf(Tweet repostOf) {
-		this.repostOf = repostOf;
-	}
-
-	public ArrayList<Tweet> getReposts() {
-		return reposts;
-	}
-
-	public void setReposts(ArrayList<Tweet> reposts) {
-		this.reposts = reposts;
 	}
 
 	public Set<Client> getLikedBy() {

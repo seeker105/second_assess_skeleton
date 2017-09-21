@@ -3,6 +3,7 @@ package com.cooksys.tweeter.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cooksys.tweeter.entity.Hashtag;
 import com.cooksys.tweeter.repository.HashtagRepository;
@@ -11,13 +12,13 @@ import com.cooksys.tweeter.repository.HashtagRepository;
 public class HashtagService {
 
 	HashtagRepository hashtagRepository;
-	
 
 	public HashtagService(HashtagRepository hashtagRepository) {
 		super();
 		this.hashtagRepository = hashtagRepository;
 	}
 	
+	@Transactional
 	public Hashtag create(String hashtagName){
 		Hashtag tag = new Hashtag(hashtagName);
 		return hashtagRepository.save(tag);

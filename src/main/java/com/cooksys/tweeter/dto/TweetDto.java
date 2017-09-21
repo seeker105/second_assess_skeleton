@@ -1,6 +1,7 @@
 package com.cooksys.tweeter.dto;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import com.cooksys.tweeter.entity.Client;
 import com.cooksys.tweeter.entity.Tweet;
@@ -15,11 +16,33 @@ public class TweetDto {
 	
 	private String content;
 	
+	private boolean deleted;
+
 	private Tweet inReplyTo;
+	
+	private ArrayList<Tweet> replies;
 	
 	private Tweet repostOf;
 	
-	private boolean deleted;
+	private ArrayList<Tweet> reposts;
+
+	
+	
+	public ArrayList<Tweet> getReplies() {
+		return replies;
+	}
+
+	public void setReplies(ArrayList<Tweet> replies) {
+		this.replies = replies;
+	}
+
+	public ArrayList<Tweet> getReposts() {
+		return reposts;
+	}
+
+	public void setReposts(ArrayList<Tweet> reposts) {
+		this.reposts = reposts;
+	}
 
 	public Integer getId() {
 		return id;

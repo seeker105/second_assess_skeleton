@@ -117,7 +117,16 @@ public class TweetService {
 		return tweetMapper.toDto(tweet);
 	}
 
-	
+	public boolean tweetExists(Integer id){
+		return getTweetById(id) != null;
+	}
+
+	@Transactional
+	public void like(Integer id, String userName) {
+		Tweet tweet = tweetRepository.findById(id);
+		Client client = clientRepository.findByUserName(userName);
+		client.getLikes().add(tweet);
+	}
 
 
 }
