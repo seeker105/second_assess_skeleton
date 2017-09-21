@@ -17,7 +17,8 @@ public class Profile {
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		if (firstName != null)
+			this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -25,7 +26,8 @@ public class Profile {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		if (lastName != null)
+			this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -33,7 +35,8 @@ public class Profile {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		if (email != null)
+			this.email = email;
 	}
 
 	public String getPhone() {
@@ -41,7 +44,8 @@ public class Profile {
 	}
 
 	public void setPhone(String phone) {
-		this.phone = phone;
+		if (phone != null)
+			this.phone = phone;
 	}
 
 	@Override
