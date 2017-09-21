@@ -54,10 +54,10 @@ public class TweetController {
 		this.tweetMapper = tweetMapper;
 	}
 
-	@GetMapping
-	public Set<Tweet> getTweets(){
-		return null;
-	}
+//	@GetMapping
+//	public Set<TweetDto> getTweets(){
+//		return tweetService.getAll();
+//	}
 	
 	@PostMapping
 	public TweetDto postTweet(@RequestBody SimpleTweetData simpleTweetData, HttpServletResponse response){

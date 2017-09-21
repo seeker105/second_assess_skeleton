@@ -94,8 +94,13 @@ public class TweetService {
 	}
 
 	public Set<TweetDto> findByHashtags(String hashtagName) {
-		return tweetMapper.toDtos(tweetRepository.findByHashtags(hashtagName));
+		return tweetMapper.toDtos(tweetRepository.findByHashtagsOrderByPostedDesc(hashtagName));
 	}
+
+//	public List<TweetDto> getAll() {
+//		return tweetMapper.toDtos(tweetRepository.findAll());
+//		return null;
+//	}
 
 
 

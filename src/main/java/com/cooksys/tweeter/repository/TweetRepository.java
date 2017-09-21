@@ -8,6 +8,6 @@ import com.cooksys.tweeter.entity.Tweet;
 
 public interface TweetRepository extends JpaRepository<Tweet, Integer>{
 
-	Set<Tweet> findByHashtags(String hashtagName);
+	Set<Tweet> findByHashtagsOrderByPostedDesc(String hashtagName);
 
 }
