@@ -1,5 +1,6 @@
 package com.cooksys.tweeter.mapper;
 
+import java.util.List;
 import java.util.Set;
 
 import org.mapstruct.Mapper;
@@ -15,5 +16,7 @@ public interface TweetMapper {
 	Tweet fromDto(TweetDto tweetDto);
 	
 	Set<TweetDto> toDtos(Set<Tweet> set);
+	
+	List<TweetDto> toDtos(List<Tweet> list);
 
 }

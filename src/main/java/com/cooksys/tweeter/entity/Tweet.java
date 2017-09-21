@@ -1,7 +1,7 @@
 package com.cooksys.tweeter.entity;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -31,7 +31,7 @@ public class Tweet {
 	private Set<Hashtag> hashtags;
 	
 	@ManyToMany(mappedBy="mentions")
-	private Set<Client> mentions;
+	private Set<Client> mentionedBy;
 	
 	@ManyToMany(mappedBy="likes")
 	private Set<Client> likedBy;
@@ -39,20 +39,20 @@ public class Tweet {
 	@ManyToOne
 	private Tweet inReplyTo;
 	
-	@OneToMany(mappedBy="inRepyTo")
-	private ArrayList<Tweet> replies;
+	@OneToMany
+	private List<Tweet> replies;
 	
 	@ManyToOne
 	private Tweet repostOf;
 	
 	@OneToMany(mappedBy="repostOf")
-	private ArrayList<Tweet> reposts;
+	private List<Tweet> reposts;
 	
-	public ArrayList<Tweet> getReplies() {
+	public List<Tweet> getReplies() {
 		return replies;
 	}
 
-	public void setReplies(ArrayList<Tweet> replies) {
+	public void setReplies(List<Tweet> replies) {
 		this.replies = replies;
 	}
 
@@ -64,11 +64,11 @@ public class Tweet {
 		this.repostOf = repostOf;
 	}
 
-	public ArrayList<Tweet> getReposts() {
+	public List<Tweet> getReposts() {
 		return reposts;
 	}
 
-	public void setReposts(ArrayList<Tweet> reposts) {
+	public void setReposts(List<Tweet> reposts) {
 		this.reposts = reposts;
 	}
 	
@@ -132,12 +132,12 @@ public class Tweet {
 		this.hashtags = hashtags;
 	}
 
-	public Set<Client> getMentions() {
-		return mentions;
+	public Set<Client> getMentionedBy() {
+		return mentionedBy;
 	}
 
-	public void setMentions(Set<Client> mentions) {
-		this.mentions = mentions;
+	public void setMentionedBy(Set<Client> mentions) {
+		this.mentionedBy = mentions;
 	}
 
 	public Set<Client> getLikedBy() {

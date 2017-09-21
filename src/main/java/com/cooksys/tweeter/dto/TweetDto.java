@@ -20,15 +20,15 @@ public class TweetDto {
 
 	private Tweet inReplyTo;
 	
-	private ArrayList<Tweet> replies;
+	//private ArrayList<Tweet> replies;
 	
 	private Tweet repostOf;
 	
-	private ArrayList<Tweet> reposts;
+	//private ArrayList<Tweet> reposts;
 
 	
 	
-	public ArrayList<Tweet> getReplies() {
+/*	public ArrayList<Tweet> getReplies() {
 		return replies;
 	}
 
@@ -42,7 +42,7 @@ public class TweetDto {
 
 	public void setReposts(ArrayList<Tweet> reposts) {
 		this.reposts = reposts;
-	}
+	}*/
 
 	public Integer getId() {
 		return id;

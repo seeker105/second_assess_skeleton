@@ -1,10 +1,12 @@
 package com.cooksys.tweeter.service;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,11 +76,11 @@ public class TweetService {
 	}
 
 	public Set<TweetDto> findByHashtags(String hashtagName) {
-		return tweetMapper.toDtos(tweetRepository.findByHashtagsOrderByPostedDesc(hashtagName));
+		return tweetMapper.toDtos(tweetRepository.findByHashtagsOrderByPosted(hashtagName));
 	}
 
-	public Set<TweetDto> getTweets() {
-		return tweetMapper.toDtos(tweetRepository.findAllOrderByPostedDesc());
+	public List<TweetDto> getTweets() {
+		return tweetMapper.toDtos(tweetRepository.findAll(new Sort(Sort.Direction.DESC, "posted")));
 	}
 
 	public TweetDto getTweetById(Integer id) {
@@ -164,7 +166,7 @@ public class TweetService {
 			System.out.println(userName);
 			if (clientController.validClient(userName)){
 				client = clientRepository.findByUserName(userName);
-				tweet.getMentions().add(client);
+				tweet.getMentionedBy().add(client);
 			}
 		}
 		return tweet;

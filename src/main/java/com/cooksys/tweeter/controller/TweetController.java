@@ -1,6 +1,6 @@
 package com.cooksys.tweeter.controller;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -51,7 +51,7 @@ public class TweetController {
 	}
 
 	@GetMapping
-	public Set<TweetDto> getTweets(){
+	public List<TweetDto> getTweets(){
 		return tweetService.getTweets();
 	}
 	
@@ -102,7 +102,7 @@ public class TweetController {
 		return tweetService.replyTo(id, tweetData);
 	}
 	
-	@PostMapping("/{id}/reply")
+	@PostMapping("/{id}/repost")
 	public TweetDto repost(@RequestParam Integer id, @RequestBody Credentials credentials, HttpServletResponse response){
 		if (!clientController.validClient(credentials) || !tweetService.tweetExists(id)){
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -110,4 +110,6 @@ public class TweetController {
 		}
 		return tweetService.repost(id, credentials.getUserLogin());
 	}
+	
+	
 }
