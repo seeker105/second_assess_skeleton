@@ -16,4 +16,6 @@ public interface ClientMapper {
 	Client fromDto(ClientDto clientDto);
 	
 	Set<ClientDto> toDtos(Set<Client> set);
+	
+	List<ClientDto> toDtos(List<Client> set);
 }

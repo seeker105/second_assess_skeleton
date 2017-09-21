@@ -1,6 +1,7 @@
 package com.cooksys.tweeter.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Embedded;
@@ -41,17 +42,17 @@ public class Client {
 	@OneToMany(mappedBy="author")
 	private Set<Tweet> tweets;
 	
-	@ManyToMany
-	private Set<Tweet> mentions;
+	@ManyToMany(mappedBy="mentionedBy")
+	private List<Tweet> mentions;
 	
 	@ManyToMany
 	private Set<Tweet> likes;
 	
-	public Set<Tweet> getMentions() {
+	public List<Tweet> getMentions() {
 		return mentions;
 	}
 
-	public void setMentions(Set<Tweet> mentions) {
+	public void setMentions(List<Tweet> mentions) {
 		this.mentions = mentions;
 	}
 
@@ -190,9 +191,10 @@ public class Client {
 	@Override
 	public String toString() {
 		return "Client [id=" + id + ", userName=" + userName + ", deleted=" + deleted + ", joined=" + joined
-				+ ", profile=" + profile + ", credentials=" + credentials + ", followers=" + followers + ", following="
-				+ following + "]";
+				+ ", profile=" + profile + ", credentials=" + credentials + "]";
 	}
+
+
 	
 	
 

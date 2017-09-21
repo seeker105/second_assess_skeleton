@@ -1,5 +1,6 @@
 package com.cooksys.tweeter.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.tweeter.dto.ClientDto;
+import com.cooksys.tweeter.dto.TweetDto;
 import com.cooksys.tweeter.embedded.ClientData;
 import com.cooksys.tweeter.embedded.Credentials;
+import com.cooksys.tweeter.repository.ClientRepository;
 import com.cooksys.tweeter.service.ClientService;
 
 @RestController
@@ -36,7 +39,6 @@ public class ClientController {
 	
 	@PostMapping
 	public ClientDto createClient(@RequestBody ClientData clientData, HttpServletResponse response){
-		System.out.println("\n\n\n\n\n Create Client clientData = " + clientData + "\n\n\n\n\n");
 		ClientDto clientDto = clientService.findByUserName(clientData.getUserName());
 		if (clientDto != null && clientService.userNameExists(clientDto.getUserName())){
 			if (clientDto.isDeleted()){
@@ -88,6 +90,42 @@ public class ClientController {
 		clientService.follow(followerCred.getUserLogin(), userName);
 	}
 	
+	@PostMapping("@{username}/unfollow")
+	public void unFollowClient(@RequestParam String username, @RequestBody Credentials followerCred, HttpServletResponse response){
+		if (!validClient(followerCred) || !validClient(username)){
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+		clientService.unFollow(followerCred.getUserLogin(), username);
+	}
+	
+	@GetMapping("/@{username}/feed")
+	public List<TweetDto> getFeed(@RequestParam String username, HttpServletResponse response){
+		if (!clientService.userNameExists(username)){
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+		return clientService.getFeed(username);
+	}
+	
+	@GetMapping("/@{username}/tweets")
+	public List<TweetDto> getTweets(@RequestParam String username, HttpServletResponse response){
+		if (!clientService.userNameExists(username)){
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+		return clientService.getTweets(username);
+	}
+	
+	@GetMapping("/@{username}/mentions")
+	public List<TweetDto> getMentions(@RequestParam String username, HttpServletResponse response){
+		if (!clientService.userNameExists(username)){
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+		return clientService.getMentions(username);
+	}
+	
 	@GetMapping("/@{userName}/followers")
 	public Set<ClientDto> getFollowers(@RequestParam String userName, HttpServletResponse response){
 		if (!clientService.userNameExists(userName)){
@@ -104,15 +142,6 @@ public class ClientController {
 			return null;
 		}
 		return clientService.getFollowing(userName);
-	}
-	
-	@PostMapping("@{username}/unfollow")
-	public void unFollowClient(@RequestParam String username, @RequestBody Credentials followerCred, HttpServletResponse response){
-		if (!validClient(followerCred) || !validClient(username)){
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			return;
-		}
-		clientService.unFollow(followerCred.getUserLogin(), username);
 	}
 
 	
@@ -135,6 +164,7 @@ public class ClientController {
 			return false;
 		return true;
 	}
+	
 	
 	
 }

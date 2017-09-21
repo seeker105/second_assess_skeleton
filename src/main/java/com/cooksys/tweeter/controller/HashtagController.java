@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cooksys.tweeter.dto.HashtagDto;
 import com.cooksys.tweeter.dto.TweetDto;
-import com.cooksys.tweeter.entity.Hashtag;
 import com.cooksys.tweeter.service.HashtagService;
 import com.cooksys.tweeter.service.TweetService;
 
@@ -27,7 +27,7 @@ public class HashtagController {
 	}
 
 	@GetMapping
-	public List<Hashtag> getHashtags(){
+	public List<HashtagDto> getHashtags(){
 		return hashtagService.getHashtags();
 	}
 	

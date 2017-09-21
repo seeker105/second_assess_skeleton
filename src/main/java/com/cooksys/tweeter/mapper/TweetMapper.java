@@ -17,6 +17,6 @@ public interface TweetMapper {
 	
 	Set<TweetDto> toDtos(Set<Tweet> set);
 	
-	List<TweetDto> toDtos(List<Tweet> list);
+	List<TweetDto> toDtos(List<Tweet> tweet);
 
 }

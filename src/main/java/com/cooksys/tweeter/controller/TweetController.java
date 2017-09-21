@@ -1,6 +1,7 @@
 package com.cooksys.tweeter.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cooksys.tweeter.dto.ClientDto;
+import com.cooksys.tweeter.dto.HashtagDto;
 import com.cooksys.tweeter.dto.TweetDto;
+import com.cooksys.tweeter.embedded.Context;
 import com.cooksys.tweeter.embedded.Credentials;
 import com.cooksys.tweeter.embedded.SimpleTweetData;
 import com.cooksys.tweeter.mapper.TweetMapper;
@@ -111,5 +115,65 @@ public class TweetController {
 		return tweetService.repost(id, credentials.getUserLogin());
 	}
 	
+	@GetMapping("{id}/tags")
+	public Set<HashtagDto> getTags(@RequestParam Integer id, HttpServletResponse response){
+		if (!tweetService.tweetExists(id)){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+		System.out.println("\n\n\n\n\n\n\n output" + tweetService.getTagsByTweet(id) + "\n\n\n\n\n");
+		return tweetService.getTagsByTweet(id);
+	}
+	
+	@GetMapping("/{id}/likes")
+	public Set<ClientDto> getLikes(@RequestParam Integer id, HttpServletResponse response){
+		if (!tweetService.tweetExists(id)){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+//		System.out.println("\n\n\n\n\n\n\n output" + tweetService.) + "\n\n\n\n\n");
+		return tweetService.getLikesByTweet(id);
+	}
+	
+	@GetMapping("/{id}/context")
+	public Context getContext(@RequestParam Integer id, HttpServletResponse response){
+		if (!tweetService.tweetExists(id)){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+		return tweetService.getContext(id);
+	}
+	
+	@GetMapping("/{id}/replies")
+	public List<TweetDto> getReplies(@RequestParam Integer id, HttpServletResponse response){
+		if (!tweetService.tweetExists(id)){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+//		System.out.println("\n\n\n\n\n\n\n output" + tweetService.) + "\n\n\n\n\n");
+		return tweetService.getRepliesByTweet(id);
+	}
+	
+	@GetMapping("/{id}/reposts")
+	public List<TweetDto> getReposts(@RequestParam Integer id, HttpServletResponse response){
+		if (!tweetService.tweetExists(id)){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+//		System.out.println("\n\n\n\n\n\n\n output" + tweetService.) + "\n\n\n\n\n");
+		return tweetService.getRepostsByTweet(id);
+	}
+	
+	@GetMapping("/{id}/mentions")
+	public List<ClientDto> getMentions(@RequestParam Integer id, HttpServletResponse response){
+		if (!tweetService.tweetExists(id)){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+//		System.out.println("\n\n\n\n\n\n\n output" + tweetService.) + "\n\n\n\n\n");
+		return tweetService.getMentionsByTweet(id);
+	}
+	
+
 	
 }

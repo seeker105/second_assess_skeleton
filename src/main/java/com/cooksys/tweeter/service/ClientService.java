@@ -1,28 +1,42 @@
 package com.cooksys.tweeter.service;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cooksys.tweeter.dto.ClientDto;
+import com.cooksys.tweeter.dto.TweetDto;
 import com.cooksys.tweeter.embedded.ClientData;
 import com.cooksys.tweeter.embedded.Credentials;
 import com.cooksys.tweeter.embedded.Profile;
 import com.cooksys.tweeter.entity.Client;
+import com.cooksys.tweeter.entity.Tweet;
 import com.cooksys.tweeter.mapper.ClientMapper;
+import com.cooksys.tweeter.mapper.TweetMapper;
 import com.cooksys.tweeter.repository.ClientRepository;
+import com.cooksys.tweeter.repository.TweetRepository;
 
 @Service
 public class ClientService {
 
+	private final boolean DELETED = true;
+	private final boolean NOT_DELETED = false;
 	private ClientRepository clientRepository;
 	private ClientMapper clientMapper;
+	private TweetRepository tweetRepository;
+	private TweetMapper tweetMapper;
 
-	public ClientService(ClientRepository clientRepository, ClientMapper clientMapper) {
+	public ClientService(ClientRepository clientRepository, ClientMapper clientMapper, TweetRepository tweetRepository,
+			TweetMapper tweetMapper) {
 		super();
 		this.clientRepository = clientRepository;
 		this.clientMapper = clientMapper;
+		this.tweetRepository = tweetRepository;
+		this.tweetMapper = tweetMapper;
 	}
 
 	public boolean userNameExists(String userName) {
@@ -62,6 +76,12 @@ public class ClientService {
 	public ClientDto activateClient(ClientDto clientDto) {
 		Client client = clientRepository.findByUserName(clientDto.getUserName());
 		client.setDeleted(false);
+		// Activate client's tweets
+		List<Tweet> clientTweets = tweetRepository.findByAuthorAndDeleted(client, DELETED);
+		for (Tweet t : clientTweets){
+			t.setDeleted(NOT_DELETED);
+			tweetRepository.save(t);
+		}
 		clientRepository.saveAndFlush(client);
 		return clientMapper.toDto(client);
 	}
@@ -92,7 +112,13 @@ public class ClientService {
 	@Transactional
 	public ClientDto deleteClient(String userName) {
 		Client client = clientRepository.findByUserName(userName);
-		client.setDeleted(true);
+		// Delete client's tweets
+		List<Tweet> clientTweets = tweetRepository.findByAuthorAndDeleted(client, NOT_DELETED);
+		for (Tweet t : clientTweets){
+			t.setDeleted(DELETED);
+			tweetRepository.save(t);
+		}
+		client.setDeleted(DELETED);
 		clientRepository.saveAndFlush(client);
 		return clientMapper.toDto(client);
 	}
@@ -119,6 +145,39 @@ public class ClientService {
 		Client followedClient = clientRepository.findByUserName(followed);
 		Client followerClient = clientRepository.findByUserName(follower);
 		followedClient.getFollowers().remove(followerClient);
+	}
+
+	public List<TweetDto> getFeed(String userName) {
+		Client client = clientRepository.findByUserName(userName);
+		// Get client's tweets
+		List<Tweet> feed = tweetRepository.findByAuthorAndDeleted(client, NOT_DELETED);
+		
+		// Get tweets from people the client is following
+		Set<Client> isFollowing = clientRepository.findByFollowingAndDeleted(client, NOT_DELETED);
+		for (Client c : isFollowing){
+			feed.addAll(tweetRepository.findByAuthorAndDeleted(c, NOT_DELETED));
+		}
+		
+		// Sort by reverse chron
+		Comparator<Tweet> compareFunc = new Comparator<Tweet>(){
+			public int compare(Tweet t1, Tweet t2){
+				return -t1.getPosted().compareTo(t2.getPosted());
+			}
+		};
+		Collections.sort(feed, compareFunc);
+		return tweetMapper.toDtos(feed);
+	}
+
+	public List<TweetDto> getTweets(String userName) {
+		Client client = clientRepository.findByUserName(userName);
+		List<Tweet> tweets = tweetRepository.findByAuthorAndDeleted(client, NOT_DELETED);
+		return tweetMapper.toDtos(tweets);
+	}
+
+	public List<TweetDto> getMentions(String userName) {
+		Client client = clientRepository.findByUserName(userName);
+		List<Tweet> tweets = tweetRepository.findByMentionedByAndDeleted(client, NOT_DELETED);
+		return tweetMapper.toDtos(tweets);
 	}
 	
 }

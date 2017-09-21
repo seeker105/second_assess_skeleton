@@ -29,11 +29,11 @@ public class Tweet {
 	
 	private boolean deleted;
 	
-	@OneToMany(mappedBy="tweets")
+	@ManyToMany
 	private Set<Hashtag> hashtags;
 	
-	@ManyToMany(mappedBy="mentions")
-	private Set<Client> mentionedBy;
+	@ManyToMany
+	private List<Client> mentionedBy;
 	
 	@ManyToMany(mappedBy="likes")
 	private Set<Client> likedBy;
@@ -58,7 +58,7 @@ public class Tweet {
 		super();
 		this.deleted = deleted;
 		this.hashtags = new HashSet<Hashtag>();
-		this.mentionedBy = new HashSet<Client>();
+		this.mentionedBy = new ArrayList<Client>();
 		this.likedBy = new HashSet<Client>();
 		this.replies = new ArrayList<Tweet>();
 		this.reposts = new ArrayList<Tweet>();
@@ -144,11 +144,11 @@ public class Tweet {
 		this.hashtags = hashtags;
 	}
 
-	public Set<Client> getMentionedBy() {
+	public List<Client> getMentionedBy() {
 		return mentionedBy;
 	}
 
-	public void setMentionedBy(Set<Client> mentionedBy) {
+	public void setMentionedBy(List<Client> mentionedBy) {
 		this.mentionedBy = mentionedBy;
 	}
 
@@ -190,6 +190,8 @@ public class Tweet {
 		return true;
 	}
 
-
-	
+	@Override
+	public String toString() {
+		return "Tweet [id=" + id + ", posted=" + posted + ", content=" + content + ", deleted=" + deleted + "]";
+	}
 }
