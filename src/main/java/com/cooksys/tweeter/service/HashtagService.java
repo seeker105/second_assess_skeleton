@@ -1,6 +1,6 @@
 package com.cooksys.tweeter.service;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -11,6 +11,7 @@ import com.cooksys.tweeter.repository.HashtagRepository;
 public class HashtagService {
 
 	HashtagRepository hashtagRepository;
+	
 
 	public HashtagService(HashtagRepository hashtagRepository) {
 		super();
@@ -26,5 +27,11 @@ public class HashtagService {
 		Hashtag hashtag = hashtagRepository.findByHashtagName(label);
 		return hashtag != null;
 	}
+
+	public List<Hashtag> getHashtags() {
+		return hashtagRepository.findAll();
+	}
+
+
 	
 }

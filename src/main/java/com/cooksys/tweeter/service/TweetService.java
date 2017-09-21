@@ -1,6 +1,7 @@
 package com.cooksys.tweeter.service;
 
 import java.sql.Timestamp;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -91,6 +92,11 @@ public class TweetService {
 		}
 		return tweetMapper.toDto(tweetRepository.save(tweet));
 	}
-	
+
+	public Set<TweetDto> findByHashtags(String hashtagName) {
+		return tweetMapper.toDtos(tweetRepository.findByHashtags(hashtagName));
+	}
+
+
 
 }
