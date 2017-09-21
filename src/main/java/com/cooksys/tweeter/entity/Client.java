@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.cooksys.tweeter.embedded.Credentials;
 import com.cooksys.tweeter.embedded.Profile;
@@ -35,8 +36,13 @@ public class Client {
 	private Set<Client> followers;
 	
 	@ManyToMany(mappedBy="followers")
-//	@JoinTable(name="follower_following", joinColumns=@JoinColumn(name="following_id"), inverseJoinColumns=@JoinColumn(name="follower_id"))
 	private Set<Client> following;
+	
+	@OneToMany(mappedBy="author")
+	private Set<Tweet> tweets;
+	
+	@ManyToMany
+	private Set<Tweet> mentions;
 	
 	public Client() {
 		super();
@@ -122,6 +128,14 @@ public class Client {
 
 	public void setFollowing(Set<Client> following) {
 		this.following = following;
+	}
+
+	public Set<Tweet> getTweets() {
+		return tweets;
+	}
+
+	public void setTweets(Set<Tweet> tweets) {
+		this.tweets = tweets;
 	}
 
 	@Override

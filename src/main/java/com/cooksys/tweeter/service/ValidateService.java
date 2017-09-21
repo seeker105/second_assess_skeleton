@@ -1,6 +1,6 @@
 package com.cooksys.tweeter.service;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -11,15 +11,20 @@ import com.cooksys.tweeter.repository.HashtagRepository;
 public class ValidateService {
 	
 	private HashtagRepository hashtagRepository;
+	private HashtagService hashtagService;
 	
-	public ValidateService(HashtagRepository hashtagRepository) {
+
+
+	public ValidateService(HashtagRepository hashtagRepository, HashtagService hashtagService) {
 		super();
 		this.hashtagRepository = hashtagRepository;
+		this.hashtagService = hashtagService;
 	}
 
+
+
 	public boolean tagExists(String label) {
-		List<Hashtag> hashtags = hashtagRepository.findByHashtagName(label);
-		return hashtags.size() > 0;
+		return hashtagService.tagExists(label);
 	}
 
 }

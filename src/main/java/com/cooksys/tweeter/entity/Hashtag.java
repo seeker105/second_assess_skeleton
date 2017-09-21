@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Hashtag {
@@ -14,6 +15,9 @@ public class Hashtag {
 	
 	@Column(unique=true)
 	private String hashtagName;
+	
+	@ManyToOne
+	private Tweet tweets;
 	
 	
 	public Hashtag() {

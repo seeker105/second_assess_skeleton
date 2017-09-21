@@ -130,7 +130,7 @@ public class ClientController {
 		return clientService.validatePassword(credentials);
 	}
 	
-	private boolean validClient(String userName){
+	public boolean validClient(String userName){
 		if (!clientService.userNameExists(userName) || clientService.clientIsDeleted(userName))
 			return false;
 		return true;

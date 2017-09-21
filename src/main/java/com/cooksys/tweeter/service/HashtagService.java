@@ -1,6 +1,6 @@
 package com.cooksys.tweeter.service;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,8 @@ public class HashtagService {
 	}
 	
 	public boolean tagExists(String label) {
-		List<Hashtag> hashtags = hashtagRepository.findByHashtagName(label);
-		return hashtags.size() > 0;
+		Hashtag hashtag = hashtagRepository.findByHashtagName(label);
+		return hashtag != null;
 	}
+	
 }
