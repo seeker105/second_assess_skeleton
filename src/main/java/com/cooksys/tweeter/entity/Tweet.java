@@ -1,6 +1,7 @@
 package com.cooksys.tweeter.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -24,9 +25,17 @@ public class Tweet {
 	
 	private String content;
 	
+	@ManyToOne
 	private Tweet inReplyTo;
 	
-	private Tweet repostOf;
+	@OneToMany(mappedBy="inRepyTo")
+	private ArrayList<Tweet> replies;
+	
+	@ManyToOne
+	private Tweet reposts;
+	
+	@OneToMany(mappedBy="repostOf")
+	private ArrayList<Tweet> repostOf;
 	
 	private boolean deleted;
 	
@@ -80,14 +89,6 @@ public class Tweet {
 		this.inReplyTo = inReplyTo;
 	}
 
-	public Tweet getRepostOf() {
-		return repostOf;
-	}
-
-	public void setRepostOf(Tweet repostOf) {
-		this.repostOf = repostOf;
-	}
-
 	public boolean isDeleted() {
 		return deleted;
 	}
@@ -111,7 +112,31 @@ public class Tweet {
 	public void setMentions(Set<Client> mentions) {
 		this.mentions = mentions;
 	}
+	
+	public ArrayList<Tweet> getReplies() {
+		return replies;
+	}
 
+	public void setReplies(ArrayList<Tweet> replies) {
+		this.replies = replies;
+	}
+
+	public Tweet getReposts() {
+		return reposts;
+	}
+
+	public void setReposts(Tweet reposts) {
+		this.reposts = reposts;
+	}
+
+	public ArrayList<Tweet> getRepostOf() {
+		return repostOf;
+	}
+
+	public void setRepostOf(ArrayList<Tweet> repostOf) {
+		this.repostOf = repostOf;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -142,10 +167,6 @@ public class Tweet {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Tweet [id=" + id + ", author=" + author + ", posted=" + posted + ", content=" + content + ", inReplyTo="
-				+ inReplyTo + ", repostOf=" + repostOf + ", deleted=" + deleted + "]";
-	}
+
 	
 }

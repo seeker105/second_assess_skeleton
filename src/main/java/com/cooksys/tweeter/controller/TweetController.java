@@ -1,24 +1,18 @@
 package com.cooksys.tweeter.controller;
 
-import java.sql.Timestamp;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.tweeter.dto.TweetDto;
 import com.cooksys.tweeter.embedded.SimpleTweetData;
-import com.cooksys.tweeter.entity.Client;
-import com.cooksys.tweeter.entity.Hashtag;
-import com.cooksys.tweeter.entity.Tweet;
 import com.cooksys.tweeter.mapper.TweetMapper;
 import com.cooksys.tweeter.repository.ClientRepository;
 import com.cooksys.tweeter.repository.HashtagRepository;
@@ -54,16 +48,26 @@ public class TweetController {
 		this.tweetMapper = tweetMapper;
 	}
 
-//	@GetMapping
-//	public Set<TweetDto> getTweets(){
-//		return tweetService.getAll();
-//	}
+	@GetMapping
+	public Set<TweetDto> getTweets(){
+		return tweetService.getTweets();
+	}
 	
 	@PostMapping
 	public TweetDto postTweet(@RequestBody SimpleTweetData simpleTweetData, HttpServletResponse response){
 		return tweetService.createSimpleTweet(simpleTweetData);
-		
 	}
+	
+	@GetMapping("/{id}")
+	public TweetDto getTweetById(@RequestParam Integer id, HttpServletResponse response){
+		TweetDto tweetDto = tweetService.getTweetById(id);
+		if (tweetDto == null){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+		return tweetDto;
+	}
+	
 	
 	
 	

@@ -10,4 +10,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Integer>{
 
 	Set<Tweet> findByHashtagsOrderByPostedDesc(String hashtagName);
 
+	Set<Tweet> findAllOrderByPostedDesc();
+
+	Tweet findByIdAndDeleted(Integer id, boolean deleted);
+
 }

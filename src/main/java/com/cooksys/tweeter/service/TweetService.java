@@ -22,6 +22,8 @@ import com.cooksys.tweeter.repository.TweetRepository;
 @Service
 public class TweetService {
 	
+	private final boolean NOT_DELETED = false;
+	
 
 	private HashtagService hashtagService;
 	private ClientController clientController;
@@ -97,10 +99,13 @@ public class TweetService {
 		return tweetMapper.toDtos(tweetRepository.findByHashtagsOrderByPostedDesc(hashtagName));
 	}
 
-//	public List<TweetDto> getAll() {
-//		return tweetMapper.toDtos(tweetRepository.findAll());
-//		return null;
-//	}
+	public Set<TweetDto> getTweets() {
+		return tweetMapper.toDtos(tweetRepository.findAllOrderByPostedDesc());
+	}
+
+	public TweetDto getTweetById(Integer id) {
+		return tweetMapper.toDto(tweetRepository.findByIdAndDeleted(id, NOT_DELETED));
+	}
 
 
 
