@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cooksys.tweeter.controller.ClientController;
 import com.cooksys.tweeter.dto.TweetDto;
@@ -42,7 +43,7 @@ public class TweetService {
 		this.tweetMapper = tweetMapper;
 	}
 	
-	
+	@Transactional
 	public TweetDto createSimpleTweet(SimpleTweetData simpleTweetData){
 		String hashtagName, userName;
 		Hashtag tag;
