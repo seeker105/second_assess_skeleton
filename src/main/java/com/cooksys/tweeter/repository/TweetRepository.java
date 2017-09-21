@@ -14,4 +14,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Integer>{
 
 	Tweet findByIdAndDeleted(Integer id, boolean deleted);
 
+	Tweet findById(Integer id);
+
 }

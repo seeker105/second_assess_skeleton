@@ -23,6 +23,7 @@ import com.cooksys.tweeter.repository.TweetRepository;
 public class TweetService {
 	
 	private final boolean NOT_DELETED = false;
+	private final boolean DELETED = true;
 	
 
 	private HashtagService hashtagService;
@@ -105,6 +106,14 @@ public class TweetService {
 
 	public TweetDto getTweetById(Integer id) {
 		return tweetMapper.toDto(tweetRepository.findByIdAndDeleted(id, NOT_DELETED));
+	}
+
+	public TweetDto deleteTweetById(Integer id) {
+		Tweet tweet = tweetRepository.findById(id);
+		if (tweet == null || tweet.isDeleted())
+			return null;
+		tweet.setDeleted(DELETED);
+		return tweetMapper.toDto(tweet);
 	}
 
 
