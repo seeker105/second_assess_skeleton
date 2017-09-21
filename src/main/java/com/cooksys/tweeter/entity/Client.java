@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.cooksys.tweeter.embedded.Credentials;
@@ -43,6 +44,9 @@ public class Client {
 	
 	@ManyToMany
 	private Set<Tweet> mentions;
+	
+	@ManyToMany
+	private Set<Tweet> likes;
 	
 	public Client() {
 		super();

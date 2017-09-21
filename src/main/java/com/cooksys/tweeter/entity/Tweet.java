@@ -32,10 +32,10 @@ public class Tweet {
 	private ArrayList<Tweet> replies;
 	
 	@ManyToOne
-	private Tweet reposts;
+	private Tweet repostOf;
 	
 	@OneToMany(mappedBy="repostOf")
-	private ArrayList<Tweet> repostOf;
+	private ArrayList<Tweet> reposts;
 	
 	private boolean deleted;
 	
@@ -44,6 +44,9 @@ public class Tweet {
 	
 	@ManyToMany(mappedBy="mentions")
 	private Set<Client> mentions;
+	
+	@ManyToMany(mappedBy="likes")
+	private Set<Client> likedBy;
 
 	public Tweet() {
 		super();
@@ -121,20 +124,28 @@ public class Tweet {
 		this.replies = replies;
 	}
 
-	public Tweet getReposts() {
-		return reposts;
-	}
-
-	public void setReposts(Tweet reposts) {
-		this.reposts = reposts;
-	}
-
-	public ArrayList<Tweet> getRepostOf() {
+	public Tweet getRepostOf() {
 		return repostOf;
 	}
 
-	public void setRepostOf(ArrayList<Tweet> repostOf) {
+	public void setRepostOf(Tweet repostOf) {
 		this.repostOf = repostOf;
+	}
+
+	public ArrayList<Tweet> getReposts() {
+		return reposts;
+	}
+
+	public void setReposts(ArrayList<Tweet> reposts) {
+		this.reposts = reposts;
+	}
+
+	public Set<Client> getLikedBy() {
+		return likedBy;
+	}
+
+	public void setLikedBy(Set<Client> likedBy) {
+		this.likedBy = likedBy;
 	}
 	
 	@Override

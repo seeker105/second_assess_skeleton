@@ -108,6 +108,7 @@ public class TweetService {
 		return tweetMapper.toDto(tweetRepository.findByIdAndDeleted(id, NOT_DELETED));
 	}
 
+	@Transactional
 	public TweetDto deleteTweetById(Integer id) {
 		Tweet tweet = tweetRepository.findById(id);
 		if (tweet == null || tweet.isDeleted())
@@ -116,6 +117,7 @@ public class TweetService {
 		return tweetMapper.toDto(tweet);
 	}
 
+	
 
 
 }
