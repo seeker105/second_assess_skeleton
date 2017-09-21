@@ -49,15 +49,9 @@ public class TweetService {
 	
 	@Transactional
 	public TweetDto createSimpleTweet(SimpleTweetData simpleTweetData){
-		String hashtagName, userName;
-		Hashtag tag;
-		Client client, author;
+		Client author= clientRepository.findByUserName(simpleTweetData.getCredentials().getUserLogin());
 		String content = simpleTweetData.getContent();
 		Tweet tweet = new Tweet();
-		
-		// Set author
-		author = clientRepository.findByUserName(simpleTweetData.getCredentials().getUserLogin());
-		author.getTweets().add(tweet);
 		
 		// Set timestamp
 		tweet.setPosted(new Timestamp(System.currentTimeMillis()));
@@ -66,33 +60,16 @@ public class TweetService {
 		tweet.setContent(content);
 		
 		// Set deleted
-		tweet.setDeleted(false);
+		tweet.setDeleted(NOT_DELETED);
 		
 		// Process hashtags
-		Pattern p = Pattern.compile("#\\w*");
-		Matcher m = p.matcher(content);
-		while(m.find()){
-			hashtagName = m.group().substring(1);
-			System.out.println(hashtagName);
-			if (!hashtagService.tagExists(hashtagName)){
-				tag = hashtagService.create(hashtagName);
-			} else {
-				tag = hashtagRepository.findByHashtagName(hashtagName);
-			}
-			tweet.getHashtags().add(tag);
-		}
+		tweet = processHashtags(tweet, content);
 		
 		// Process mentions
-		p = Pattern.compile("@\\w");
-		m = p.matcher(content);
-		while(m.find()){
-			userName = m.group().substring(1);
-			System.out.println(userName);
-			if (clientController.validClient(userName)){
-				client = clientRepository.findByUserName(userName);
-				tweet.getMentions().add(client);
-			}
-		}
+		tweet = processMentions(tweet, content);
+
+		// Set author
+		author.getTweets().add(tweet);
 		return tweetMapper.toDto(tweetRepository.save(tweet));
 	}
 
@@ -128,5 +105,91 @@ public class TweetService {
 		client.getLikes().add(tweet);
 	}
 
+	@Transactional
+	public TweetDto replyTo(Integer id, SimpleTweetData tweetData) {
+		Client author= clientRepository.findByUserName(tweetData.getCredentials().getUserLogin());
+		String content = tweetData.getContent();
+		Tweet tweet = new Tweet();
+		Tweet inReplyTo = tweetRepository.findById(id);
+		
+		
+		// Set timestamp
+		tweet.setPosted(new Timestamp(System.currentTimeMillis()));
+		
+		// Set content
+		tweet.setContent(content);
+		
+		// Set deleted
+		tweet.setDeleted(NOT_DELETED);
+		
+		// Process hashtags
+		tweet = processHashtags(tweet, content);
+		
+		// Process mentions
+		tweet = processMentions(tweet, content);
+		
+		// Set inReplyTo
+		tweet.setInReplyTo(inReplyTo);
+
+		// Set author
+		author.getTweets().add(tweet);
+		return tweetMapper.toDto(tweetRepository.save(tweet));
+	}
+	
+	private Tweet processHashtags(Tweet tweet, String content){
+		String hashtagName;
+		Hashtag tag;
+		Pattern p = Pattern.compile("#\\w*");
+		Matcher m = p.matcher(content);
+		while(m.find()){
+			hashtagName = m.group().substring(1);
+			System.out.println(hashtagName);
+			if (!hashtagService.tagExists(hashtagName)){
+				tag = hashtagService.create(hashtagName);
+			} else {
+				tag = hashtagRepository.findByHashtagName(hashtagName);
+			}
+			tweet.getHashtags().add(tag);
+		}
+		return tweet;
+	}
+
+	private Tweet processMentions(Tweet tweet, String content){
+		String userName;
+		Client client;
+		Pattern p = Pattern.compile("@\\w");
+		Matcher m = p.matcher(content);
+		while(m.find()){
+			userName = m.group().substring(1);
+			System.out.println(userName);
+			if (clientController.validClient(userName)){
+				client = clientRepository.findByUserName(userName);
+				tweet.getMentions().add(client);
+			}
+		}
+		return tweet;
+	}
+
+	@Transactional
+	public TweetDto repost(Integer id, String userName) {
+		Client author = clientRepository.findByUserName(userName);
+		Tweet tweet = new Tweet();
+		Tweet repostOf = tweetRepository.findById(id);
+		
+		// Set timestamp
+		tweet.setPosted(new Timestamp(System.currentTimeMillis()));
+		
+		// Set deleted
+		tweet.setDeleted(NOT_DELETED);
+		
+		// Set repostOf
+		tweet.setRepostOf(repostOf);
+
+		// Set author
+		author.getTweets().add(tweet);
+		return tweetMapper.toDto(tweetRepository.save(tweet));
+	}
+	
+	
 
 }

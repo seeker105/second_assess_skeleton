@@ -89,4 +89,25 @@ public class TweetController {
 		tweetService.like(id, credentials.getUserLogin());
 	}
 	
+	@PostMapping("/{id}/reply")
+	public TweetDto replyTo(@RequestParam Integer id, @RequestBody SimpleTweetData tweetData, HttpServletResponse response){
+		if (!clientController.validClient(tweetData.getCredentials()) || !tweetService.tweetExists(id)){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+		if (tweetData.getContent() == null || tweetData.getContent().equals("")){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+		return tweetService.replyTo(id, tweetData);
+	}
+	
+	@PostMapping("/{id}/reply")
+	public TweetDto repost(@RequestParam Integer id, @RequestBody Credentials credentials, HttpServletResponse response){
+		if (!clientController.validClient(credentials) || !tweetService.tweetExists(id)){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+		return tweetService.repost(id, credentials.getUserLogin());
+	}
 }
