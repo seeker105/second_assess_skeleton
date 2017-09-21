@@ -24,4 +24,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Integer>{
 	List<Tweet> findByMentionedByAndDeleted(Client client, boolean deleted);
 
 	List<Tweet> findByRepostOfAndDeleted(Tweet tweet, boolean deleted);
+
+	List<Tweet> findByinReplyTo(Tweet current);
 }

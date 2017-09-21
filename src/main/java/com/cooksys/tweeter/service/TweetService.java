@@ -280,8 +280,8 @@ public class TweetService {
 	}
 
 	private void traverseAfterTree(Tweet current, ArrayList<Tweet> after) {
-		List<Tweet> replies = current.getReplies();
-		for (Tweet tweet : replies){
+//		List<Tweet> replies = current.getReplies();
+		for (Tweet tweet : tweetRepository.findByinReplyTo(current)){
 			if (!tweet.isDeleted())
 				after.add(tweet);
 			traverseAfterTree(tweet, after);
