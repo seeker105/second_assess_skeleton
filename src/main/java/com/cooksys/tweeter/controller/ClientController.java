@@ -39,6 +39,10 @@ public class ClientController {
 	
 	@PostMapping
 	public ClientDto createClient(@RequestBody ClientData clientData, HttpServletResponse response){
+		if (!validClientData(clientData)){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
 		ClientDto clientDto = clientService.findByUserName(clientData.getUserName());
 		if (clientDto != null && clientService.userNameExists(clientDto.getUserName())){
 			if (clientDto.isDeleted()){
@@ -165,6 +169,21 @@ public class ClientController {
 		return true;
 	}
 	
+	private boolean validClientData(ClientData clientData){
+		if (clientData.getProfile().getEmail() == null || clientData.getProfile().getEmail().equals(""))
+			return false;
+		if (!validCredentials(clientData.getCredentials()))
+			return false;
+		return true;
+	}
+	
+	private boolean validCredentials(Credentials credentials){
+		if (credentials.getUserLogin() == null || credentials.getUserLogin().equals(""))
+			return false;
+		if (credentials.getPassword() == null || credentials.getPassword().equals(""))
+			return false;
+		return true;
+	}
 	
 	
 }
