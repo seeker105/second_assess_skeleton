@@ -67,6 +67,10 @@ public class ClientController {
 	
 	@PatchMapping("/@{userName}")
 	public ClientDto updateClientProfile(@RequestBody ClientData clientData, HttpServletResponse response){
+		if (!validClientData(clientData)){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
 		
 		System.out.println("\n\n\n\n\nvalidClient(clientData) = " + validClient(clientData) + "\n\n\n\n\n");
 		if (!validClient(clientData)){

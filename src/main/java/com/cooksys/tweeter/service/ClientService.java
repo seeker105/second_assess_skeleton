@@ -93,7 +93,11 @@ public class ClientService {
 	@Transactional
 	public ClientDto updateClient(ClientData clientData) {
 		Client client = clientRepository.findByUserName(clientData.getUserName());
-		client.setProfile(clientData.getProfile());
+//		client.setProfile(clientData.getProfile());
+		client.getProfile().setEmail(clientData.getProfile().getEmail());
+		client.getProfile().setFirstName(clientData.getProfile().getFirstName());
+		client.getProfile().setLastName(clientData.getProfile().getLastName());
+		client.getProfile().setPhone(clientData.getProfile().getPhone());
 		clientRepository.saveAndFlush(client);
 		return clientMapper.toDto(client);
 	}

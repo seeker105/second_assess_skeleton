@@ -17,7 +17,7 @@ public class Profile {
 	}
 
 	public void setFirstName(String firstName) {
-		if (firstName != null)
+		if (firstName != null && !firstName.equals(""))
 			this.firstName = firstName;
 	}
 
@@ -26,7 +26,7 @@ public class Profile {
 	}
 
 	public void setLastName(String lastName) {
-		if (lastName != null)
+		if (lastName != null && !lastName.equals(""))
 			this.lastName = lastName;
 	}
 
@@ -35,7 +35,7 @@ public class Profile {
 	}
 
 	public void setEmail(String email) {
-		if (email != null)
+		if (email != null && !email.equals(""))
 			this.email = email;
 	}
 
@@ -44,7 +44,7 @@ public class Profile {
 	}
 
 	public void setPhone(String phone) {
-		if (phone != null)
+		if (phone != null && !phone.equals(""))
 			this.phone = phone;
 	}
 
