@@ -87,8 +87,19 @@ public class TweetService {
 		return tweetMapper.toDto(tweetRepository.save(tweet));
 	}
 
-	public Set<TweetDto> findByHashtags(String hashtagName) {
-		return tweetMapper.toDtos(tweetRepository.findByHashtagsOrderByPosted(hashtagName));
+	public List<TweetDto> findByHashtags(String hashtagName) {
+//		return tweetMapper.toDtos(tweetRepository.findByHashtagsOrderByPosted(hashtagName));
+		Hashtag tag = hashtagRepository.findByHashtagName(hashtagName);
+		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
+		tweets.addAll(tweetRepository.findByHashtagsAndDeleted(tag, false));
+		// Sort by reverse chron
+		Comparator<Tweet> compareFunc = new Comparator<Tweet>(){
+			public int compare(Tweet t1, Tweet t2){
+				return -t1.getPosted().compareTo(t2.getPosted());
+			}
+		};
+		Collections.sort(tweets, compareFunc);
+		return tweetMapper.toDtos(tweets);
 	}
 
 	public List<TweetDto> getTweets() {
