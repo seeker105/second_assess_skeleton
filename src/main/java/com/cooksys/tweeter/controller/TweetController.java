@@ -1,5 +1,6 @@
 package com.cooksys.tweeter.controller;
 
+
 import java.util.List;
 import java.util.Set;
 
@@ -61,6 +62,11 @@ public class TweetController {
 	
 	@PostMapping
 	public TweetDto postTweet(@RequestBody SimpleTweetData simpleTweetData, HttpServletResponse response){
+		if (simpleTweetData.getContent() == null || simpleTweetData.getContent().equals("")){
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+				
 		return tweetService.createSimpleTweet(simpleTweetData);
 	}
 	
