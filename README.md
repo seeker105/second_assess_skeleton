@@ -8,7 +8,7 @@ I used the MapStruct utility to create mappers to convert database entities into
 
 Setting up the individual endpoints was fairly straightforward. The primary challenge there was getting all of them complete and checked by the due date. Creating the Context endpoint was predicted to be difficult, but it turned out to be simple. A tweet is marked 'Deleted' by a boolean field on the record, but no tweet is ever removed from the database. Since the chain of before- and after-relationships is never altered a simple query can find all the connected tweets and filter out the 'Deleted' tweets.
 
-Finding a way to correctly sort the tweets was actually more of a challenge. I had never worked with creating a custom Comparator before; I had to do some research on the internet to find some code examples. Due to time constraints, once I found a solution I repeated the code in several places within a single file. One obvious change I would make if refactoring is to extract that out and remove code duplication.
+Finding a way to correctly sort the tweets was actually more of a challenge. I had never worked with creating a custom Comparator before; I had to do some research on the internet to find code examples. Due to time constraints, once I found a solution I repeated the code in several places within a single file. One obvious change I would make if refactoring is to extract that out and remove code duplication.
 
 Another major change I would like to make in future iterations of this is to set up automated testing. One option is to use a utility like DbUnit to put the database into a known state between test runs.
 
