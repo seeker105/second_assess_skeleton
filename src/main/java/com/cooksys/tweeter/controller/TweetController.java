@@ -20,12 +20,6 @@ import com.cooksys.tweeter.dto.TweetDto;
 import com.cooksys.tweeter.embedded.Context;
 import com.cooksys.tweeter.embedded.Credentials;
 import com.cooksys.tweeter.embedded.SimpleTweetData;
-import com.cooksys.tweeter.mapper.TweetMapper;
-import com.cooksys.tweeter.repository.ClientRepository;
-import com.cooksys.tweeter.repository.HashtagRepository;
-import com.cooksys.tweeter.repository.TweetRepository;
-import com.cooksys.tweeter.service.ClientService;
-import com.cooksys.tweeter.service.HashtagService;
 import com.cooksys.tweeter.service.TweetService;
 
 @RestController
@@ -33,27 +27,15 @@ import com.cooksys.tweeter.service.TweetService;
 public class TweetController {
 
 	private TweetService tweetService;
-	private HashtagService hashtagService;
 	private ClientController clientController;
-	private ClientService clientService;
-	private ClientRepository clientRepository;
-	private TweetRepository tweetRepository;
-	private HashtagRepository hashtagRepository;
-	private TweetMapper tweetMapper;
 
-	public TweetController(TweetService tweetService, HashtagService hashtagService, ClientController clientController,
-			ClientService clientService, ClientRepository clientRepository, TweetRepository tweetRepository,
-			HashtagRepository hashtagRepository, TweetMapper tweetMapper) {
+	public TweetController(TweetService tweetService, ClientController clientController) {
 		super();
 		this.tweetService = tweetService;
-		this.hashtagService = hashtagService;
 		this.clientController = clientController;
-		this.clientService = clientService;
-		this.clientRepository = clientRepository;
-		this.tweetRepository = tweetRepository;
-		this.hashtagRepository = hashtagRepository;
-		this.tweetMapper = tweetMapper;
 	}
+
+
 
 	@GetMapping
 	public List<TweetDto> getTweets(){

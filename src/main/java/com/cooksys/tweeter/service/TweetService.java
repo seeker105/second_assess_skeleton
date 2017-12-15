@@ -38,7 +38,6 @@ public class TweetService {
 
 	private HashtagService hashtagService;
 	private ClientController clientController;
-	private ClientService clientService;
 	private ClientRepository clientRepository;
 	private TweetRepository tweetRepository;
 	private HashtagRepository hashtagRepository;
@@ -46,13 +45,12 @@ public class TweetService {
 	private HashtagMapper hashtagMapper;
 	private ClientMapper clientMapper;
 	
-	public TweetService(HashtagService hashtagService, ClientController clientController, ClientService clientService,
+	public TweetService(HashtagService hashtagService, ClientController clientController,
 			ClientRepository clientRepository, TweetRepository tweetRepository, HashtagRepository hashtagRepository,
 			TweetMapper tweetMapper, HashtagMapper hashtagMapper, ClientMapper clientMapper) {
 		super();
 		this.hashtagService = hashtagService;
 		this.clientController = clientController;
-		this.clientService = clientService;
 		this.clientRepository = clientRepository;
 		this.tweetRepository = tweetRepository;
 		this.hashtagRepository = hashtagRepository;

@@ -18,7 +18,6 @@ import com.cooksys.tweeter.dto.ClientDto;
 import com.cooksys.tweeter.dto.TweetDto;
 import com.cooksys.tweeter.embedded.ClientData;
 import com.cooksys.tweeter.embedded.Credentials;
-import com.cooksys.tweeter.repository.ClientRepository;
 import com.cooksys.tweeter.service.ClientService;
 
 @RestController

@@ -1,10 +1,6 @@
 package com.cooksys.tweeter.dto;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-
-import com.cooksys.tweeter.entity.Client;
-import com.cooksys.tweeter.entity.Tweet;
 
 public class TweetDto {
 	

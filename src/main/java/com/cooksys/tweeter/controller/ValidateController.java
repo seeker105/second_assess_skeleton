@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.tweeter.embedded.Credentials;
 import com.cooksys.tweeter.embedded.Profile;
-import com.cooksys.tweeter.embedded.SimpleTweetData;
 import com.cooksys.tweeter.service.ClientService;
 import com.cooksys.tweeter.service.HashtagService;
-import com.cooksys.tweeter.service.TweetService;
 
 @RestController
 @RequestMapping("validate")
@@ -21,15 +19,13 @@ public class ValidateController {
 	
 	private HashtagService hashtagService;
 	private ClientService clientService;
-	private TweetService tweetService;
 	
 	private final boolean INACTIVE = true;
 		
-	public ValidateController(HashtagService hashtagService, ClientService clientService, TweetService tweetService) {
+	public ValidateController(HashtagService hashtagService, ClientService clientService) {
 		super();
 		this.hashtagService = hashtagService;
 		this.clientService = clientService;
-		this.tweetService = tweetService;
 	}
 
 	@PostMapping("/setup")
@@ -103,10 +99,6 @@ public class ValidateController {
 		clientService.create(INACTIVE, c5, p5);
 		clientService.create(INACTIVE, c6, p6);
 		completeMessage += "Client setup completed\n";
-		
-		SimpleTweetData t1, t2, t3, t4, t5, t6, t7, t8, t9, t10; 
-		
-//		tweetService.createSimpleTweet(simpleTweetData)
 		
 		return completeMessage;
 	}
