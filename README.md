@@ -1,6 +1,6 @@
 # Project Overview
 
-This was a class assignment to develop skills in API creation, database usage and the Spring framework. It was intended to model the kind of functionality provided by Twitter. I created a Postgres relational database to hold information about users and tweets and the relationships between them. I used Hibernate to provide the database interface. It enabled me to retrieve datasets based on parameters and relationships (All tweets authored by a given user) without having to write raw SQL.
+This was a class assignment to develop skills in API creation, database usage and the Spring framework. It was intended to model the kind of functionality provided by Twitter. I created a Postgres relational database to hold information about users and tweets and the relationships between them. I used JPA to provide the database interface. It enabled me to retrieve datasets based on parameters and relationships (All tweets authored by a given user) without having to write raw SQL.
 
 I used the MapStruct utility to create mappers to convert database entities into Data Transfer Objects that could be sent over the internet in response to an endpoint request. One consideration was avoiding infinite cycles in returned data (A user has tweets that have users, etc.).
 
