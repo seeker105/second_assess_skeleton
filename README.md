@@ -6,7 +6,7 @@ This was a class assignment to develop skills in API creation, database usage an
 
 I used the MapStruct utility to create mappers to convert database entities into Data Transfer Objects that could be sent over the internet in response to an endpoint request. One consideration was avoiding infinite cycles in returned data (A user has tweets that have users, etc.).
 
-Setting up the individual endpoints was fairly straightforward. It was a very simple format. Creating the Context endpoint was predicted to be difficult, but it turned out to be simple. A tweet is marked 'Deleted' by a boolean field on the record, but no tweet is ever removed from the database. Since the chain of before- and after-relationships is never altered a query can still find all the connected tweets and simply filter out the 'Deleted' tweets.
+Setting up the individual endpoints was fairly straightforward. The primary challenge there was getting all of them complete and checked by the due date. Creating the Context endpoint was predicted to be difficult, but it turned out to be simple. A tweet is marked 'Deleted' by a boolean field on the record, but no tweet is ever removed from the database. Since the chain of before- and after-relationships is never altered a simple query can find all the connected tweets and filter out the 'Deleted' tweets.
 
 Finding a way to correctly sort the tweets was actually more of a challenge. I had never worked with creating a custom Comparator before; I had to do some research on the internet to find some code examples. Due to time constraints, once I found a solution I repeated the code in several places within a single file. One obvious change I would make if refactoring is to extract that out and remove code duplication.
 
