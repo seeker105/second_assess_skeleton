@@ -35,8 +35,6 @@ public class TweetController {
 		this.clientController = clientController;
 	}
 
-
-
 	@GetMapping
 	public List<TweetDto> getTweets(){
 		return tweetService.getTweets();
@@ -110,7 +108,6 @@ public class TweetController {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
-		System.out.println("\n\n\n\n\n\n\n output" + tweetService.getTagsByTweet(id) + "\n\n\n\n\n");
 		return tweetService.getTagsByTweet(id);
 	}
 	
@@ -120,7 +117,6 @@ public class TweetController {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
-//		System.out.println("\n\n\n\n\n\n\n output" + tweetService.) + "\n\n\n\n\n");
 		return tweetService.getLikesByTweet(id);
 	}
 	
@@ -139,7 +135,6 @@ public class TweetController {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
-//		System.out.println("\n\n\n\n\n\n\n output" + tweetService.) + "\n\n\n\n\n");
 		return tweetService.getRepliesByTweet(id);
 	}
 	
@@ -149,7 +144,6 @@ public class TweetController {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
-//		System.out.println("\n\n\n\n\n\n\n output" + tweetService.) + "\n\n\n\n\n");
 		return tweetService.getRepostsByTweet(id);
 	}
 	
@@ -159,7 +153,6 @@ public class TweetController {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
-//		System.out.println("\n\n\n\n\n\n\n output" + tweetService.) + "\n\n\n\n\n");
 		return tweetService.getMentionsByTweet(id);
 	}
 	

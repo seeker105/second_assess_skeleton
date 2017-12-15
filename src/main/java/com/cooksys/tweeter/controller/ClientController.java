@@ -56,7 +56,6 @@ public class ClientController {
 	@GetMapping("/@{userName}")
 	public ClientDto findByUserName(@RequestParam String userName, HttpServletResponse response){
 		
-//		System.out.println("\n\n\n\n\nclient.isDeleted = " + clientService.userNameExists(userName) + "\n\n\n\n\n");
 		if (!clientService.userNameExists(userName) || clientService.clientIsDeleted(userName)){
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
@@ -71,7 +70,6 @@ public class ClientController {
 			return null;
 		}
 		
-		System.out.println("\n\n\n\n\nvalidClient(clientData) = " + validClient(clientData) + "\n\n\n\n\n");
 		if (!validClient(clientData)){
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
